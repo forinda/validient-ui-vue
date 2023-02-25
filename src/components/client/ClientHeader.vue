@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import Logo from '../Logo.vue';
+</script>
+
 <template>
-  <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px 20px] h-[96px] w-full">
+    <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px 20px] h-[96px] w-full">
         <router-link :to="{ name: 'Home' }" class="flex items-center gap-4 pt-5">
 
             <Logo class="text-color1 font-bold" />
@@ -14,10 +18,4 @@
 
         </nav>
     </div>
-</template>
-
-<script setup lang="ts">
-import Logo from '../Logo.vue';
-</script>
-
-<style scoped></style>
+</template> 
