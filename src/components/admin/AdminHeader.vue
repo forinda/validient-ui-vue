@@ -1,23 +1,19 @@
 <template>
-  <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px 20px] h-[96px] w-full">
-        <router-link :to="{ name: 'Home' }" class="flex items-center gap-4 pt-5">
-
-            <Logo class="text-color1 font-bold" />
-            <h1 class="text-2xl font-bold">
+    <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px_20px] h-20 w-full justify-between items-center">
+        <router-link :to="{ name: 'Home' }" class="flex items-center gap-4 pt-5 ">
+            <fa icon="fa fa-bars"></fa>
+            <span class="text-md uppercase font-medium">
                 Validient
-                <span class="text-2xl font-bold">Law</span>
-            </h1>
+            </span>
         </router-link>
-        <nav class="flex items-center gap-3 justify-center pt-[30px] ">
-           
-           <router-link :to="{name:'Home'}">Home</router-link>
-
-        </nav>
+        <div>
+            <img src="https://xsgames.co/randomusers/assets/avatars/male/40.jpg" class="h-8 w-8 object-cover rounded-full" alt="">
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import Logo from '../Logo.vue';
+// import Logo from '../Logo.vue';
 </script>
 
 <style scoped></style>

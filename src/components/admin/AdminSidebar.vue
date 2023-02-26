@@ -66,9 +66,9 @@ const menuItems = ref<Array<MenuItem>>([
 </script>
 <template>
   <aside
-    class="h-screen bg-color2 border-r p-10 flex flex-col justify-between rounded-3xl"
+    class="h-screen bg-color2 border-r flex flex-col justify-between p-4 overflow-scroll no-scrollbar absolute w-60 top-0"
   >
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-3">
       <router-link
         :to="{ name: 'Admin' }"
         class="flex justify-center flex-col items-center"

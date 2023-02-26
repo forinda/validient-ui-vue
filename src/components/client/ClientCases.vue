@@ -29,8 +29,8 @@ const tableItems = ref<Array<TableItems>>([
     <div class="flex items-center justify-center w-full h-[300px] pt-7">
         <table class="table-auto shadow rounded">
             <thead class="bg-slate-100 flex gap-3 divide-x">
-                <tr v-for="({ name }) of tableItems" class="divide-x p-2">
-                    <th class="text-2xl font-semibold">{{ name }}</th>
+                <tr v-for="({ name }) of tableItems" class="divide-x p-2 border-spacing-1">
+                    <th class="text-2xl font-semibold px-10 py-3">{{ name }}</th>
 
                 </tr>
             </thead>

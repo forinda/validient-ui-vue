@@ -24,6 +24,10 @@ import {
   faDashboard,
   faCalendar,
   faUserShield,
+  faBars,
+  faEllipsisV,
+  faEllipsisVertical,
+  faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -49,7 +53,7 @@ library.add(
   faHandcuffs,
   faHouse,
   faDollar,
-  faLock,faCog,faLockOpen,faDashboard,faCalendar,faUserShield
+  faLock,faCog,faLockOpen,faDashboard,faCalendar,faUserShield,faBars,faEllipsisVertical,faClose
 );
 
 // export the fontawesome icon component

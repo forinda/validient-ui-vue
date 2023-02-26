@@ -1,11 +1,15 @@
 <template>
-  <div class="grid grid-cols-[280px_1fr] bg-color8 p-4">
+  <div class="">
+   
     <AdminSidebar />
-    <div class="p-4">
-      <AdminHeader />
-      <main class="w-full p-4 ">
+   
+    <div class="flex flex-col ml-60">
+     
+        <AdminHeader />
+      
+      <div class=" bg-color8 h-full w-full ">
         <router-view></router-view>
-      </main>
+      </div>
     </div>
   </div>
 </template>
