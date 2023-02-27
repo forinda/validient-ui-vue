@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const baseRoutes: RouteRecordRaw = {
   path: "/",
@@ -24,12 +25,26 @@ const baseRoutes: RouteRecordRaw = {
       name: "login",
       component: () =>
         /**webpackChunkName:Login */ import("@/views/LoginPage.vue"),
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore();
+        if (authStore.authenticated && authStore.authStateAccessTokenValid) {
+          next({ name: "home" });
+        }
+        next();
+      },
     },
     {
       path: "/register",
       name: "register",
       component: () =>
         /**webpackChunkName:Register */ import("@/views/RegisterPage.vue"),
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore();
+        if (authStore.authenticated && authStore.authStateAccessTokenValid) {
+          next({ name: "home" });
+        }
+        next();
+      },
     },
     {
       path: "/contact",

@@ -1,10 +1,12 @@
-import { createApp } from "vue";
 import "./style.css";
+
 import App from "./App.vue";
-import router from "@/router";
 import Fa from "@/plugins/fontawesome";
-import VueApexCharts from "vue3-apexcharts";
 import VCalendar from 'v-calendar';
+import VueApexCharts from "vue3-apexcharts";
+import { createApp } from "vue";
+import piniaPlugin from "@/plugins/piniaPlugin";
+import router from "@/router";
 
 router.beforeEach((to, from, next) => {
   console.log("beforeEach");
@@ -23,4 +25,5 @@ createApp(App)
   .use(VCalendar, {})
   .use(VueApexCharts)
   .use(router)
+  .use(piniaPlugin)
   .mount("#app");

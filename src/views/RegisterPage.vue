@@ -3,7 +3,6 @@ import { computed, ref } from "vue";
 import { GenderType, SignUpFormPropType } from "@/typings";
 import Logo from "@/components/Logo.vue";
 import { useVuelidate } from "@vuelidate/core";
-import { publicAxios } from "@/api";
 import {
   required,
   email,
@@ -11,8 +10,9 @@ import {
   helpers,
   sameAs,
 } from "@vuelidate/validators";
-import { useRouter } from "vue-router";
-const router = useRouter();
+import useAuthStore from "@/store/useAuthStore";
+// const { authStateLoading, registrationErrors } = storeToRefs(useAuthStore())
+const store = useAuthStore();
 type formSteps = "personal-info" | "password";
 const currentStep = ref<formSteps>("personal-info");
 const formData = ref<SignUpFormPropType & { confirmPassword: string }>({
@@ -83,39 +83,15 @@ const genderInfo = ref<
   },
 ]);
 const submitForm = async () => {
+  console.log(store.registrationErrors);
+  
   passwordInfo$.value.$validate();
   if (passwordInfo$.value.$error) {
     return;
   }
-  try {
-    serverErrors.value = [];
-    const res = await publicAxios.post("/auth/register", formData.value);
-    alert("Account created successfully");
-    await router.push({ name: "login" });
-  } catch (error: any) {
-    if (error.response) {
-      const { data } = error.response;
-      if (data.errorMessage) {
-        if (String(data.errorMessage).toLowerCase() === "Please initialize roles first".toLowerCase()) {
-          serverErrors.value = ['Something went wrong, please try again later'];
-          await publicAxios.post("/auth/init");
-          return;
-        }
-        else {
-          serverErrors.value = [data.errorMessage];
-          return;
-        }
-      }
-      if (data.errors) {
-        serverErrors.value = data.errors;
-      }
-    }
-  }
+  await store.registerUser(formData.value);
 };
-const serverHasError = computed(() => serverErrors.value.length > 0);
-const clearServerErrors = () => {
-  serverErrors.value = [];
-};
+
 </script>
 <template>
   <main class="flex justify-center items-center py-6 min-h-[60vh]">
@@ -129,8 +105,9 @@ const clearServerErrors = () => {
 
       </div>
       <div>
-        <p v-if="serverHasError" @click="clearServerErrors" class="border p-2 rounded bg-red-200">
-          <span v-for="item in serverErrors" :key="item" class="text-red-500 text-sm">
+        <p v-if="Array.isArray(store.registrationErrors) && store.registrationErrors.length > 0 ? true : false"
+          @click.pre="store.resetErrors" class="border p-2 rounded bg-red-200">
+          <span v-for="item in store.registrationErrors??[]" :key="item" class="text-red-500 text-sm">
             {{ item }}
           </span>
         </p>

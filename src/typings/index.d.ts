@@ -1,7 +1,7 @@
 export type GenderType = "MALE" | "FEMALE" | "OTHER";
 
 export type UserType = {
-    [key:string]:any
+  [key: string]: any;
   id: number;
   email: string;
   username: string;
@@ -16,8 +16,8 @@ export type UserType = {
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
 };
-export type LawyerTypes={
-  [key:string]:any
+export type LawyerTypes = {
+  [key: string]: any;
   id: number;
   email: string;
   username: string;
@@ -25,11 +25,10 @@ export type LawyerTypes={
   lastName: string;
   avatar: string | null;
   gender: GenderType;
-  caseType:string
-
-}
-export type ClientTypes={
-  [key:string]:any
+  caseType: string;
+};
+export type ClientTypes = {
+  [key: string]: any;
   id: number;
   email: string;
   username: string;
@@ -37,9 +36,17 @@ export type ClientTypes={
   lastName: string;
   avatar: string | null;
   gender: GenderType;
-}
+};
 export type UserAuthorityType = {
   authority: string;
+};
+
+export type RouteMetaType = {
+  title: string;
+  description: string;
+  requiresAuth: boolean;
+  authorities: string[];
+  roles: string[];
 };
 
 export type UserRoleType = {
@@ -67,8 +74,8 @@ export type SignUpFormPropType = {
   lastName: string;
   acceptTerms: boolean;
   gender: GenderType;
-  avatar:'',
-  username:string
+  avatar: "";
+  username: string;
 };
 
 export type SignInFormPropType = {
