@@ -71,7 +71,6 @@ const paginatedItems = computed(() => {
               </div>
             </th>
             <th scope="col" v-for="tabl in Object.keys(tableBody[0])" class="px-6 py-3">{{ tabl }}</th>
-
           </tr>
         </thead>
         <tbody>

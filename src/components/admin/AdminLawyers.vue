@@ -1,36 +1,24 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-interface Item {
-  name: string;
-}
-
+import { lawyers } from "@/data/lawyerdata"
+import { LawyerTypes } from "@/typings"
 // pagination
-const items = ref<Item[]>([
-  { name: 'Item 1' },
-  { name: 'Item 2' },
-  { name: 'Item 3' },
-  { name: 'Item 4' },
-  { name: 'Item 5' },
-  { name: 'Item 6' },
-  { name: 'Item 7' },
-  { name: 'Item 8' },
-  { name: 'Item 9' },
-  { name: 'Item 10' }
-]);
-console.log(items);
+const lawyersData = ref<LawyerTypes[]>(
+  lawyers
+);
 
 const currentPage = ref(1);
 const pageSize = 3;
 
 const pageCount = computed(() => {
-  return Math.ceil(items.value.length / pageSize);
+  return Math.ceil(lawyersData.value.length / pageSize);
 });
 console.log(pageCount);
 
 const paginatedItems = computed(() => {
   const startIndex = (currentPage.value - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  return items.value.slice(startIndex, endIndex);
+  return lawyersData.value.slice(startIndex, endIndex);
 });
 
 
@@ -39,11 +27,41 @@ const paginatedItems = computed(() => {
 
 </script>
 <template>
-  <div class="bg-white">
-    <h1>Lawyers</h1>
-    <ul>
-      <li v-for="item in paginatedItems" :key="item.name">{{ item.name }}</li>
-    </ul>
+   <div class="bg-white shadow rounded-md  w-full h-full">
+    <div class="overflow-scroll p-10 no-scrollbar">
+    <table  class="table-auto w-full text-sm text-center text-gray-500 dark:text-gray-400 border p-4 m-4 rounded-sm shadow-lg">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th>
+            <div class="flex items-center justify-center">
+              <input id="checkbox-all-search" type="checkbox"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+              <label for="checkbox-all-search" class="sr-only">checkbox</label>
+            </div>
+          </th>
+          <th scope="col" v-for="tHead in Object.keys(lawyersData[0])" class="px-6 py-3">{{ tHead }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="lawyer in paginatedItems" :key="lawyer.id"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="flex items-center">
+                <input id="checkbox-table-search-1" type="checkbox"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+              </div>
+            </td>
+            <td v-for="objKey of Object.keys(lawyer)">
+              <div v-if="objKey === 'avatar'" class="flex justify-center items-centers">
+                <img :src="lawyer.avatar ? lawyer.avatar :''" :alt="lawyer.name" class="h-8 w-8 rounded-full object-cover">
+              </div>
+              <div v-else>{{lawyer[objKey] }}</div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    <!-- page -->
     <div class="flex justify-center items-center gap-2 pb-4">
       <button class="rounded px-2 py-1 bg-gray-200 text-gray-700 hover:bg-gray-300" v-if="currentPage > 1"
         @click="currentPage--">Previous</button>
@@ -52,24 +70,8 @@ const paginatedItems = computed(() => {
         @click="currentPage++">Next</button>
     </div>
   </div>
-  <table class="table-auto flex justify-center items-center flex-col bg-sky-100 border-spacing-3">
-        <thead>
-          <tr>
-           
-            <th class="px-12 py-3  text-slate-400">Email</th>
-           
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="detail in paginatedItems" :key="detail.name">
-            <td class="border-b px-11 py-3">{{ detail.name }}</td>
-            
-           
-                <fa icon="fa fa-ellipsis-vertical"></fa>
-             
-          </tr>
-        </tbody>
-      </table>
+   </div>
+  
 </template>
 <style scoped></style> 
 

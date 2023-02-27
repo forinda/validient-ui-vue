@@ -16,6 +16,28 @@ export type UserType = {
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
 };
+export type LawyerTypes={
+  [key:string]:any
+  id: number;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatar: string | null;
+  gender: GenderType;
+  caseType:string
+
+}
+export type ClientTypes={
+  [key:string]:any
+  id: number;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatar: string | null;
+  gender: GenderType;
+}
 export type UserAuthorityType = {
   authority: string;
 };
