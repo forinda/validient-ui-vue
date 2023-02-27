@@ -2,19 +2,19 @@ import { RouteRecordRaw } from "vue-router";
 
 const adminRoutes: RouteRecordRaw = {
   path: "/admin",
-  name: "Admin",
+  name: "admin",
   component: () =>
     /**webpackChunkName:AdminLayout */ import("@/layouts/AdminLayout.vue"),
   children: [
     {
       path: "",
-      name: "AdminBase",
+      name: "adminBase",
       component: () =>
         /**webpackChunkName:Login */ import("@/views/admin/BaseAdmin.vue"),
     },
     {
       path: "dashboard",
-      name: "AdminDashboard",
+      name: "adminDashboard",
       component: () =>
         /**webpackChunkName:Dashboard */ import(
           "@/layouts/AdminDashboardLayout.vue"
@@ -22,7 +22,7 @@ const adminRoutes: RouteRecordRaw = {
       children: [
         {
           path: "",
-          name: "AdminDashboardOverview",
+          name: "adminDashboardOverview",
           component: () =>
             /**webpackChunkName:Overview */ import(
               "@/components/admin/AdminOverview.vue"
@@ -30,7 +30,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "users",
-          name: "AdminUsers",
+          name: "adminUsers",
           component: () =>
             /**webpackChunkName:Users */ import(
               "@/components/admin/AdminUsers.vue"
@@ -38,7 +38,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "roles",
-          name: "AdminRoles",
+          name: "adminRoles",
           component: () =>
             /**webpackChunkName:Roles */ import(
               "@/components/admin/AdminRoles.vue"
@@ -46,7 +46,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "permissions",
-          name: "AdminPermissions",
+          name: "adminPermissions",
           component: () =>
             /**webpackChunkName:Permissions */ import(
               "@/components/admin/AdminPermissions.vue"
@@ -62,7 +62,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "profile",
-          name: "AdminProfile",
+          name: "adminProfile",
           component: () =>
             /**webpackChunkName:Profile */ import(
               "@/components/admin/AdminProfile.vue"
@@ -70,7 +70,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "lawyers",
-          name: "AdminLawyers",
+          name: "adminLawyers",
           component: () =>
             /**webpackChunkName:Lawyers */ import(
               "@/components/admin/AdminLawyers.vue"
@@ -78,7 +78,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "clients",
-          name: "AdminClients",
+          name: "adminClients",
           component: () =>
             /**webpackChunkName:Clients */ import(
               "@/components/admin/AdminClients.vue"
@@ -86,7 +86,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "cases",
-          name: "AdminCases",
+          name: "adminCases",
           component: () =>
             /**webpackChunkName:Cases */ import(
               "@/components/admin/AdminCases.vue"
@@ -94,7 +94,7 @@ const adminRoutes: RouteRecordRaw = {
         },
         {
           path: "appointments",
-          name: "AdminAppointments",
+          name: "adminAppointments",
           component: () =>
             /**webpackChunkName:Appointments */ import(
               "@/components/admin/AdminAppointments.vue"

@@ -66,7 +66,9 @@ export type SignUpFormPropType = {
   firstName: string;
   lastName: string;
   acceptTerms: boolean;
-  gender: string;
+  gender: GenderType;
+  avatar:'',
+  username:string
 };
 
 export type SignInFormPropType = {

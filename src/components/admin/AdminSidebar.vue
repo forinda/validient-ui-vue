@@ -70,7 +70,7 @@ const menuItems = ref<Array<MenuItem>>([
   >
     <div class="flex flex-col gap-3">
       <router-link
-        :to="{ name: 'Admin' }"
+        :to="{ name: 'admin' }"
         class="flex justify-center flex-col items-center"
       >
         <div class="h-8 w-8 text-color1">

@@ -56,7 +56,7 @@ import Logo from "@/components/Logo.vue";
               </div>
               <p class="py-4 text-center">
                 Don't have an account?
-                <router-link :to="{ name: 'Register' }" class="text-blue-500">Sign up</router-link>
+                <router-link :to="{ name: 'register' }" class="text-blue-500">Sign up</router-link>
               </p>
             </form>
           </div>

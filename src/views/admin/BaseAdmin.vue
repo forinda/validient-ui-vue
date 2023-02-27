@@ -10,10 +10,10 @@
         >
       </p>
       <div class="flex gap-4 justify-center">
-        <router-link :to="{ name: 'Home' }" class="text-blue-500 border-blue-500"
+        <router-link :to="{ name: 'home' }" class="text-blue-500 border-blue-500"
           >Homepage</router-link
         >
-        <router-link :to="{ name: 'AdminDashboard' }" class="text-blue-500"
+        <router-link :to="{ name: 'adminDashboard' }" class="text-blue-500"
           >Dashboard</router-link
         >
       </div>

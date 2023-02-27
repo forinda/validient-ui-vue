@@ -4,7 +4,7 @@ import Logo from '../Logo.vue';
 
 <template>
     <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px 20px] h-[96px] w-full">
-        <router-link :to="{ name: 'Home' }" class="flex items-center gap-4 pt-5">
+        <router-link :to="{ name: 'home' }" class="flex items-center gap-4 pt-5">
 
             <Logo class="text-color1 font-bold" />
             <h1 class="text-2xl font-bold">
@@ -14,7 +14,7 @@ import Logo from '../Logo.vue';
         </router-link>
         <nav class="flex items-center gap-3 justify-center pt-[30px] ">
            
-           <router-link :to="{name:'Home'}">Home</router-link>
+           <router-link :to="{name:'home'}">Home</router-link>
 
         </nav>
     </div>

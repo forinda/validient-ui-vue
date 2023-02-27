@@ -1,6 +1,6 @@
 <template>
     <div class=" flex gap-3 bg-white drop-shadow-lg p-[16px_20px] h-20 w-full justify-between items-center">
-        <router-link :to="{ name: 'Home' }" class="flex items-center gap-4 pt-5 ">
+        <router-link :to="{ name: 'home' }" class="flex items-center gap-4 pt-5 ">
             <fa icon="fa fa-bars"></fa>
             <span class="text-md uppercase font-medium">
                 Validient

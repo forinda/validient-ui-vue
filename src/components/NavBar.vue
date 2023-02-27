@@ -2,7 +2,7 @@
   <main class="bg-neutral-50 border-b sticky top-0 z-[99999]">
     <div class="mx-auto max-w-7xl flex justify-between py-4">
       <!-- Logo -->
-      <router-link :to="{ name: 'Home' }" class="flex items-center gap-4">
+      <router-link :to="{ name: 'home' }" class="flex items-center gap-4">
         <!-- draw a v logo  svg-->
         <Logo />
         <h1>
@@ -26,13 +26,13 @@
       <!-- CTAs -->
       <div class="flex gap-4">
         <router-link
-          :to="{ name: 'Login' }"
+          :to="{ name: 'login' }"
           class="text-md font-medium hover:text-neutral-900 px-4 py-2 rounded-full border border-color1 text-color1"
         >
           Login
         </router-link>
         <router-link
-          :to="{ name: 'Register' }"
+          :to="{ name: 'register' }"
           class="text-md font-medium hover:text-neutral-900 bg-color1 text-color3 py-2 px-4 rounded-full"
         >
           Register
