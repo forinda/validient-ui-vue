@@ -1,4 +1,4 @@
-import { SignUpFormPropType, UserType } from "@/typings";
+import { SignInFormPropType, SignUpFormPropType, UserType } from "@/typings";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
 import { Router } from "vue-router";
@@ -63,14 +63,37 @@ export const useAuthStore = defineStore({
     loginErrors: (state: AuthState) => state.errors.loginErrors,
   },
   actions: {
+    async loginUser(user: SignInFormPropType) {
+      try {
+        const res = await publicAxios.post("/auth/login", user);
+        const { data } = res;
+        console.log(data);
+
+        this.user = data.user;
+        this.accessToken = data.token;
+        this.authenticated = true;
+        localStorage.setItem(stateKeys.authState, JSON.stringify(this.$state));
+        alert("Login successful");
+        await (this as unknown as AuthStateTypeWithRouter).router.push({
+          name: "home",
+        });
+      } catch (err: any) {
+        console.log(err);
+
+        this.errors.loginErrors = ["Invalid username or password"];
+      } finally {
+        this.loading = false;
+      }
+    },
     async registerUser(user: SignUpFormPropType) {
       try {
+        this.errors.registerErrors = [];
         const res = await publicAxios.post("/auth/register", user);
         alert("Account created successfully");
-        debounce(() => {
-        (this as unknown as AuthStateTypeWithRouter).router.push({
-          name: "login",
-        });
+        debounce(async () => {
+          await (this as unknown as AuthStateTypeWithRouter).router.push({
+            name: "login",
+          });
         }, 1000);
       } catch (error: any) {
         if (error.response) {

@@ -7,7 +7,7 @@ import {
   required,
   email,
   minLength,
-  helpers,
+  maxLength,
   sameAs,
 } from "@vuelidate/validators";
 import useAuthStore from "@/store/useAuthStore";
@@ -44,7 +44,7 @@ const validForm = computed(
 );
 
 const passwordInfoRules = computed(() => ({
-  password: { required },
+  password: { required,minLength: minLength(8), maxLength: maxLength(32) },
   confirmPassword: { required, sameAs: sameAs(formData.value.password, 'password') },
   acceptTerms: { required },
 }));

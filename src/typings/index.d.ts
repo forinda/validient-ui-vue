@@ -79,6 +79,6 @@ export type SignUpFormPropType = {
 };
 
 export type SignInFormPropType = {
-  email: string;
+  username: string;
   password: string;
 };
