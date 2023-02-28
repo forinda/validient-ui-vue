@@ -9,6 +9,7 @@ import {
 } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { useAuthStore } from '@/store/useAuthStore'
+import {storeToRefs} from 'pinia'
 const store = useAuthStore()
 const formData = ref<SignInFormPropType>({
   username: "",
@@ -26,7 +27,6 @@ const handleLogin = async () => {
     return;
   }
   await store.loginUser(formData.value)
-  console.log(formData.value)
 }
 </script>
 <template>
@@ -41,6 +41,14 @@ const handleLogin = async () => {
               </div>
               <h1>Validient</h1>
             </div>
+            <div>
+        <p v-if="Array.isArray(store.loginErrors) && store.loginErrors.length > 0 ? true : false"
+          @click.pre="store.resetErrors" class="border p-2 rounded bg-red-200">
+          <span v-for="item in store.registrationErrors??[]" :key="item" class="text-red-500 text-sm">
+            {{ item }}
+          </span>
+        </p>
+      </div>
             <h1 class="text-3xl text-center my-4 uppercase font-bold">Sign in</h1>
             <hr class="mt-6 border-b-1 border-gray-400" />
           </div>

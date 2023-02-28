@@ -112,11 +112,9 @@ export const useAuthStore = defineStore({
         this.errors.registerErrors = [];
         const res = await publicAxios.post("/auth/register", user);
         alert("Account created successfully");
-        debounce(async () => {
-          await (this as unknown as AuthStateTypeWithRouter).router.push({
-            name: "login",
-          });
-        }, 1000);
+        await (this as unknown as AuthStateTypeWithRouter).router.push({
+          name: "login",
+        });
       } catch (error: any) {
         if (error.response) {
           const { data } = error.response;
