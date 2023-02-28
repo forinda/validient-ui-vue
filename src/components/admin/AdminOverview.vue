@@ -1,6 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { publicAxios } from "@/api";
+import useAuthStore from "@/store/useAuthStore";
+import { storeToRefs } from "pinia";
+import { ref, onMounted } from "vue";
 import { ApexOptions } from "apexcharts";
+import axios from "axios";
+
+const { authStateAccessToken } = storeToRefs(useAuthStore())
+
+const lawyers = onMounted(async () => {
+  try {
+    const token = `Bearer ${authStateAccessToken.value}`
+    console.log({token});
+    
+    const res = await axios.get("http://localhost:8080/api/v1/lawyers", {
+      headers: {
+        Authorization: token,
+      },
+    });
+    // const res = await publicAxios.get("http://localhost:8080/api/v1/lawyers",{
+    //   headers: {
+    //     Authorization: `Bearer ${authStateAccessToken.value}`,
+    //   },
+    // });
+    const data = res.data;
+    console.log(data);
+
+  } catch (err) {
+    console.log(err)
+  }
+});
 
 const overviewData = ref<
   Array<{
@@ -226,9 +255,7 @@ const t2 = {
 };
 </script>
 <template>
-  <div
-    class="overflow-scroll no-scrollbar grid grid-cols-[1fr_250px] gap-8 w-full min-h-screen p-4"
-  >
+  <div class="overflow-scroll no-scrollbar grid grid-cols-[1fr_250px] gap-8 w-full min-h-screen p-4">
     <div class="w-full flex flex-col gap-4">
       <div class="border p-10 rounded-lg shadow bg-color3">
         <h1 class="text-4xl font-bold">
@@ -237,11 +264,8 @@ const t2 = {
         <p class="text-xl">Admin stats and overview</p>
       </div>
       <div class="grid grid-cols-3 gap-4 p-4 border rounded bg-color3">
-        <div
-          v-for="item in overviewData"
-          :key="Object.keys(item)[0]"
-          class="flex items-center justify-between p-4 bg-gradient-to-r from-color1 to-color4 text-color3 shadow-md rounded h-24"
-        >
+        <div v-for="item in overviewData" :key="Object.keys(item)[0]"
+          class="flex items-center justify-between p-4 bg-gradient-to-r from-color1 to-color4 text-color3 shadow-md rounded h-24">
           <div class="flex flex-col gap-2 text-xl uppercase p-10">
             <fa :icon="Object.values(item)[0].icon" class="text-4xl"></fa>
             <h1 class="ml-2">{{ Object.values(item)[0].name }}</h1>
@@ -250,23 +274,15 @@ const t2 = {
         </div>
       </div>
       <div class="h-fit bg-white p-4 rounded-lg border">
-        <apexchart
-          type="area"
-          height="350"
-          :options="t2.chartOptions"
-          :series="t2.series"
-        ></apexchart>
+        <apexchart type="area" height="350" :options="t2.chartOptions" :series="t2.series"></apexchart>
       </div>
     </div>
     <div class="flex flex-col gap-4">
       <div class="bg-color3 p-4 rounded">
         <h1>Top lawyers</h1>
         <div class="flex flex-col gap-2">
-          <div
-            v-for="lawyer in topLawyers.slice(0, 5)"
-            :key="lawyer.name"
-            class="flex items-center gap-4 p-4 border rounded text-sm"
-          >
+          <div v-for="lawyer in topLawyers.slice(0, 5)" :key="lawyer.name"
+            class="flex items-center gap-4 p-4 border rounded text-sm">
             <div class="w-8 h-8 rounded-full bg-gray-200">
               <img :src="lawyer.image" alt="" class="h-full aspect-square rounded-full">
             </div>

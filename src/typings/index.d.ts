@@ -81,3 +81,19 @@ export type SignInFormPropType = {
   username: string;
   password: string;
 };
+
+export type LawyerType = {
+  id: number;
+  verifiedYear: number;
+  hourlyRate: number;
+  practiceAreas: string;
+  notes: string;
+  identification: string;
+  specialization: CaseType[];
+};
+
+export type CaseType = {
+  id: number;
+  name: string;
+  description: string;
+};

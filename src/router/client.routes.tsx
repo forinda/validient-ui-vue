@@ -15,12 +15,20 @@ const clientRoutes: RouteRecordRaw = {
   children: [
     {
       path: "",
-      name: "client",
+      name: "clientWrap",
       component: () =>
         /**webpackChunkName:ClientLayout */ import(
           "@/layouts/ClientDashboardLayout.vue"
         ),
       children: [
+        {
+          path: "",
+          name: "client",
+          component: () =>
+            /**webpackChunkName:ClientCases */ import(
+              "@/components/client/ClientOverview.vue"
+            ),
+        },
         {
           path: "cases",
           name: "ClientCases",

@@ -9,8 +9,13 @@ type MenuItem = {
 };
 const menuItems = ref<Array<MenuItem>>([
     {
-        name: "ClientCases",
+        name: "Dashboard",
         icon: "fa fa-dashboard",
+        route: "client",
+        title: "Dashboard",
+    },  {
+        name: "ClientCases",
+        icon: "fa fa-gavel",
         route: "ClientCases",
         title: "Cases",
     },
