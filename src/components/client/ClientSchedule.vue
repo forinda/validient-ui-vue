@@ -6,6 +6,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/store/useAuthStore";
 import moment from 'moment'
 import formatScheduleTime from "@/utils/formatScheduleTime";
+import { getDateStatus } from '@/utils/dateBefoeAfterUtil'
 const { authStateAccessToken, authStateUser } = storeToRefs(useAuthStore())
 const date = ref(new Date());
 const userSchedules = ref<ScheduleType[]>([]);
@@ -62,7 +63,6 @@ onMounted(async () => {
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th>
-
             <div class="flex items-center justify-center">
               <input id="checkbox-all-search" type="checkbox"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -71,6 +71,7 @@ onMounted(async () => {
           </th>
           <th scope="col" class="px-6 py-3">Id</th>
           <th scope="col" class="px-6 py-3">Title</th>
+          <th scope="col" class="px-6 py-3">Status</th>
           <th scope="col" class="px-6 py-3">Description</th>
           <th scope="col" class="px-6 py-3">Date</th>
           <th scope="col" class="px-6 py-3">Time</th>
@@ -91,6 +92,11 @@ onMounted(async () => {
           </td>
           <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ schedule.title }}
+          </td>
+          <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span class="border px-2 rounded-full uppercase py-1 text-xs"
+              :class="{ 'bg-green-600 text-white': getDateStatus(formatScheduleTime(schedule)) === 'today', 'bg-red-300 text-white': getDateStatus(formatScheduleTime(schedule)) === 'yesterday', 'bg-yellow-600 text-white': getDateStatus(formatScheduleTime(schedule)) === 'tomorrow', 'bg-neutral-200': true }">{{
+                getDateStatus(formatScheduleTime(schedule)) }}</span>
           </td>
           <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ schedule.description }}

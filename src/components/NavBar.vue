@@ -24,9 +24,8 @@
       <div v-if="authStateAuthenticated" class="flex gap-4 items-center">
         <div v-for="({ routeName, title }) of dashBoardLinks">
           <router-link v-if="routeName === 'client'" :to="{ name: routeName }"
-            class="text-md font-medium hover:text-neutral-900 px-4 py-2 rounded-full border flex items-center gap-2">
-            @
-            {{ authStateUser?.username }}
+            class="text-md font-medium hover:text-neutral-900 px-4 py-1 rounded-full border flex items-center gap-2 bg-color1 text-white capitalize">
+            profile
             <img :src="authStateUser?.avatar!" alt="" class="h-8 w-8 rounded-full">
           </router-link>
           <router-link v-else :to="{name:routeName}" class="text-lg font-lg text-neutral-500 hover:text-neutral-900">
