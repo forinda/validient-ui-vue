@@ -7,7 +7,7 @@ export type UserType = {
   username: string;
   firstName: string;
   lastName: string;
-  avatar: string | null;
+  avatar: string;
   gender: GenderType;
   roles: UserRoleType[];
   enabled: boolean;
@@ -97,25 +97,73 @@ export type CaseType = {
   name: string;
   description: string;
 };
+export type CaseStatusType = {
+  id: number;
+  name: string;
+  description: string;
+};
 
-  export type AppointmentType = {
-    title: string;
-    description: string;
-    year: number;
-    month: number;
-    date: number;
-    startHour: number;
-    startMinute: number;
-    owner: number;
-    members: number[];
-  }
-  export type ScheduleType = {
-    id: number;
-    title: string;
-    description: string;
-    year: number;
-    month: number;
-    date: number;
-    startHour: number;
-    startMinute: number;
-  };
+export type AppointmentType = {
+  title: string;
+  description: string;
+  year: number;
+  month: number;
+  date: number;
+  startHour: number;
+  startMinute: number;
+  owner: number;
+  members: number[];
+};
+export type ScheduleType = {
+  id: number;
+  title: string;
+  description: string;
+  year: number;
+  month: number;
+  date: number;
+  startHour: number;
+  startMinute: number;
+};
+export type CaseDefendantType = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  identity: string;
+};
+
+export type caseFilingType = {
+  id: number;
+  title: string;
+  description: string;
+  dateFiled: string;
+  caseId: string;
+  caseType: CaseType;
+  status: CaseStatusType;
+  lawyers: LawyerType[];
+  defendants: CaseDefendantType[];
+  plaintiff: UserType;
+};
+
+const appointment = {
+  id: 0,
+  title: "string",
+  description: "string",
+  year: 0,
+  month: 0,
+  date: 0,
+  startHour: 0,
+  startMinute: 0,
+};
+
+export type AppointmentType = {
+  id: number;
+  title: string;
+  description: string;
+  year: number;
+  month: number;
+  date: number;
+  startHour: number;
+  startMinute: number;
+  owner: number;
+  members: Array<number | UserType>;
+};

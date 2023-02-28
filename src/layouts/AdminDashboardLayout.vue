@@ -1,16 +1,14 @@
 <template>
-  <div class="">
-   
-    <AdminSidebar />
-   
-    <div class="flex flex-col ml-60">
-     
-        <AdminHeader />
-      
-      <div class=" bg-color8 h-full w-full ">
+   <div class="flex flex-col ">
+      <div class="shadow-md fixed w-60">
+        <admin-sidebar />
+      </div>
+      <div class="ml-60">
+      <admin-header></admin-header>
+      <div class="min-h-screen">
         <router-view></router-view>
       </div>
-    </div>
+      </div>
   </div>
 </template>
 

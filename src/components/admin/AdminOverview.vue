@@ -5,298 +5,290 @@ import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { ApexOptions } from "apexcharts";
 import axios from "axios";
+import { LawyerTypes, UserType, CaseType, CaseStatusType, ScheduleType, CaseDefendantType, caseFilingType, AppointmentType,UserRoleType } from "@/typings";
 
-const { authStateAccessToken } = storeToRefs(useAuthStore())
+const { authStateAccessToken, authStateUser } = storeToRefs(useAuthStore())
+const lawyers = ref<Array<LawyerTypes>>([]);
+const users = ref<Array<UserType>>([]);
+const caseTypes = ref<Array<CaseType>>([]);
+const caseStatuses = ref<Array<CaseStatusType>>([]);
+const schedules = ref<Array<ScheduleType>>([]);
+const caseDefendants = ref<Array<CaseDefendantType>>([]);
+const caseFilings = ref<Array<caseFilingType>>([]);
+const appointments = ref<Array<AppointmentType>>([]);
+  const roles = ref<Array<UserRoleType>>([]);
 
-const lawyers = onMounted(async () => {
-  try {
-    const token = `Bearer ${authStateAccessToken.value}`
-    console.log({token});
-    
-    const res = await axios.get("http://localhost:8080/api/v1/lawyers", {
-      headers: {
-        Authorization: token,
-      },
-    });
-    // const res = await publicAxios.get("http://localhost:8080/api/v1/lawyers",{
-    //   headers: {
-    //     Authorization: `Bearer ${authStateAccessToken.value}`,
-    //   },
-    // });
-    const data = res.data;
-    console.log(data);
+onMounted(async () => {
+  const headers = {
+    Authorization: `Bearer ${authStateAccessToken.value}`,
+  };
+  const fetchUsers = async () => {
+    console.log('fetching users');
 
-  } catch (err) {
-    console.log(err)
+    try {
+      const res = await publicAxios.get('/users', { headers })
+      users.value = res.data
+      console.log('users', users.value);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+  const fetchLawyers = async () => {
+    try {
+      const res = await publicAxios.get('/lawyers', { headers })
+      lawyers.value = res.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchCaseTypes = async () => {
+    try {
+      const res = await publicAxios.get('/case-type', { headers })
+      caseTypes.value = res.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchCaseStatuses = async () => {
+    try {
+      const res = await publicAxios.get('/case-status', { headers })
+      caseStatuses.value = res.data
+      console.log('caseStatuses', caseStatuses.value);
 
-const overviewData = ref<
-  Array<{
-    [key: string]: {
-      name: string;
-      icon: string;
-      value: number;
-    };
-  }>
->([
-  {
-    appointments: {
-      name: "Appointments",
-      icon: "fa fa-calendar",
-      value: 0,
-    },
-  },
-  {
-    clients: {
-      name: "Clients",
-      icon: "fa fa-user",
-      value: 0,
-    },
-  },
-  {
-    lawyers: {
-      name: "Lawyers",
-      icon: "fa fa-user",
-      value: 0,
-    },
-  },
-  {
-    users: {
-      name: "Users",
-      icon: "fa fa-users",
-      value: 0,
-    },
-  },
-  {
-    roles: {
-      name: "Roles",
-      icon: "fa fa-user-shield",
-      value: 0,
-    },
-  },
-  {
-    permissions: {
-      name: "Permissions",
-      icon: "fa fa-lock-open",
-      value: 0,
-    },
-  },
-]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchSchedules = async () => {
+    try {
+      const res = await publicAxios.get('/schedules', { headers })
+      console.log('schedules', res.data);
+      schedules.value = res.data
 
-const topLawyers = ref([
-  {
-    name: "Jane Doe",
-    email: "",
-    image: "https://xsgames.co/randomusers/assets/avatars/female/20.jpg",
-    appointments: 0,
-  },
-  {
-    name: "John Doe",
-    email: "",
-    image: "https://xsgames.co/randomusers/assets/avatars/male/20.jpg",
-    appointments: 0,
-  },
-  {
-    name: "June M.",
-    email: "",
-    image: "https://xsgames.co/randomusers/assets/avatars/female/40.jpg",
-    appointments: 0,
-  },
-  {
-    name: "Dan Mose",
-    email: "",
-    image: "https://xsgames.co/randomusers/assets/avatars/male/10.jpg",
-    appointments: 0,
-  },
-  {
-    name: "John Doe",
-    email: "",
-    image: "https://xsgames.co/randomusers/assets/avatars/female/20.jpg",
-    appointments: 0,
-  },
-]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchCaseDefendants = async () => {
+    try {
+      const res = await publicAxios.get('/defendants', { headers })
+      console.log('caseDefendants', res.data);
+      caseDefendants.value = res.data
 
-const ApxOptions = ref<ApexOptions>({
-  theme: {
-    mode: "light",
-    monochrome: {
-      color: "red",
-    },
-  },
-  series: [
-    {
-      data: [
-        {
-          y: 3,
-          x: "Jan",
-        },
-        {
-          y: 50,
-          x: "Feb",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "March",
-          strokeColor: "#004534",
-        },
-        {
-          y: 30,
-          x: "April",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "May",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "June",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "July",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "August",
-          strokeColor: "#004534",
-        },
-        {
-          y: 100,
-          x: "September",
-          strokeColor: "#004534",
-        },
-        {
-          y: 43,
-          x: "October",
-          strokeColor: "#004534",
-        },
-        {
-          y: 55,
-          x: "November",
-          strokeColor: "#004534",
-        },
-        {
-          y: 67,
-          x: "December",
-          strokeColor: "#004534",
-        },
-      ],
-      name: "Data layers",
-    },
-  ],
-  xaxis: {
-    title: {
-      text: "Months (12)",
-    },
-  },
-  yaxis: {
-    title: { text: "Number of cases reported", offsetX: 3 },
-  },
-  chart: {
-    height: 400,
-    toolbar: {
-      tools: { pan: true },
-    },
-    type: "candlestick",
-  },
-});
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchCaseFilings = async () => {
+    try {
+      const res = await publicAxios.get('/cases', { headers })
+      console.log('caseFilings', res.data);
+      caseFilings.value = res.data
 
-const t2 = {
-  series: [
-    {
-      name: "Divorse cases",
-      data: [31, 40, 28, 51, 42, 109, 100],
-    },
-    {
-      name: "Criminal cases",
-      data: [11, 32, 45, 32, 34, 52, 41],
-    },
-  ],
-  chartOptions: {
-    chart: {
-      height: 350,
-      type: "area",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      type: "string",
-      categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ],
-    },
-    tooltip: {
-      x: {
-        format: "MM",
-      },
-    },
-  },
-};
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchAppointments = async () => {
+    try {
+      const res = await publicAxios.get('/appointments', { headers })
+      console.log('appointments', res.data);
+      appointments.value = res.data
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fetchRoles = async () => {
+    try {
+      const res = await publicAxios.get('/roles', { headers })
+      console.log('roles', res.data);
+      roles.value = res.data
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  return Promise.all([
+    fetchLawyers(),
+    fetchUsers(),
+    fetchCaseTypes(),
+    fetchCaseStatuses(),
+    fetchSchedules(),
+    fetchCaseDefendants(),
+    fetchCaseFilings(),
+    fetchAppointments(),
+    fetchRoles()
+  ])
+
+})
+
+
 </script>
 <template>
-  <div class="overflow-scroll no-scrollbar grid grid-cols-[1fr_250px] gap-8 w-full min-h-screen p-4">
-    <div class="w-full flex flex-col gap-4">
-      <div class="border p-10 rounded-lg shadow bg-color3">
-        <h1 class="text-4xl font-bold">
-          Welcome back, <span class="font-bold">Admin</span>
-        </h1>
-        <p class="text-xl">Admin stats and overview</p>
-      </div>
-      <div class="grid grid-cols-3 gap-4 p-4 border rounded bg-color3">
-        <div v-for="item in overviewData" :key="Object.keys(item)[0]"
-          class="flex items-center justify-between p-4 bg-gradient-to-r from-color1 to-color4 text-color3 shadow-md rounded h-24">
-          <div class="flex flex-col gap-2 text-xl uppercase p-10">
-            <fa :icon="Object.values(item)[0].icon" class="text-4xl"></fa>
-            <h1 class="ml-2">{{ Object.values(item)[0].name }}</h1>
+  <main class="flex flex-col gap-4 p-4 font-rubik bg-neutral-100 h-full">
+    <div class="gap-4 w-full">
+      <!-- <div class="h-80 w-80 bg-white rounded border flex flex-col p-4 justify-between shadow">
+          <div class="py-2">
+            <h1 class="text-center">{{ authStateUser?.firstName }} {{ authStateUser?.lastName }}</h1>
+            <p class="text-center">{{ authStateUser?.email }}</p>
           </div>
-          <h1 class="text-5xl font-bold">{{ Object.values(item)[0].value }}</h1>
-        </div>
-      </div>
-      <div class="h-fit bg-white p-4 rounded-lg border">
-        <apexchart type="area" height="350" :options="t2.chartOptions" :series="t2.series"></apexchart>
-      </div>
-    </div>
-    <div class="flex flex-col gap-4">
-      <div class="bg-color3 p-4 rounded">
-        <h1>Top lawyers</h1>
-        <div class="flex flex-col gap-2">
-          <div v-for="lawyer in topLawyers.slice(0, 5)" :key="lawyer.name"
-            class="flex items-center gap-4 p-4 border rounded text-sm">
-            <div class="w-8 h-8 rounded-full bg-gray-200">
-              <img :src="lawyer.image" alt="" class="h-full aspect-square rounded-full">
+          <div class="h-full flex justify-center items-center">
+            <img :src="authStateUser?.avatar" alt="" class="h-32 w-32 rounded-full">
+          </div>
+          <div class="">
+            <h1 class="text-center font-bold ">Roles</h1>
+            <ul class="flex items-center justify-center gap-2">
+              <li v-for="role in authStateUser?.roles" :key="role.id"
+                class=" px-2 text-sm rounded-full bg-color2 text-color3">
+                {{ role.name }}
+              </li>
+            </ul>
+          </div>
+        </div> -->
+      <!-- Stats grid -->
+      <div class="grid grid-cols-5 grid-rows-2 w-full gap-4">
+        <!-- Grid item1 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ lawyers.length }}</h1>
+              <p>Lawyers</p>
             </div>
-            <div class="flex flex-col">
-              <h1>{{ lawyer.name }}</h1>
-              <p>{{ lawyer.email }}</p>
-            </div>
-            <div class="flex items-center">
-              <i class="fa fa-calendar"></i>
-              <h1 class="ml-2">{{ lawyer.appointments }}</h1>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
             </div>
           </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 2 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ users.length }}</h1>
+              <p>Users</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 3 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ caseTypes.length }}</h1>
+              <p>Case types</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 4 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ caseStatuses.length }}</h1>
+              <p>Case statuses</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 5 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ schedules.length }}</h1>
+              <p>Schedules</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 6 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ caseDefendants.length }}</h1>
+              <p>Case defendants</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 7 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ caseDefendants.length }}</h1>
+              <p>Case files</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <!-- Grid 8 -->
+        <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ appointments.length }}</h1>
+              <p>Appointments</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+         <!-- Grid 9 -->
+         <div class=" bg-white h-full flex flex-col p-4 justify-between">
+          <div class="flex justify-between">
+            <div class="flex flex-col gap-2">
+              <h1 class="color-1 font-bold text-3xl">{{ roles.length }}</h1>
+              <p>Roles</p>
+            </div>
+            <div>
+              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+            </div>
+          </div>
+          <div class="h-fit border-t">
+            <p>Available</p>
+          </div>
+        </div>
+        <div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>

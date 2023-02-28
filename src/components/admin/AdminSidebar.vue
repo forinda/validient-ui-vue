@@ -1,98 +1,33 @@
 <script setup lang="ts">
 import Logo from "../Logo.vue";
 import { ref } from "vue";
-type MenuItem = {
-  name: string;
-  icon: string;
-  route: string;
-  title: string;
-};
-const menuItems = ref<Array<MenuItem>>([
-  {
-    name: "admin",
-    icon: "fa fa-dashboard",
-    route: "admin",
-    title: "Dashboard",
-  },
-  {
-    name: "Admin Appointments",
-    icon: "fa fa-calendar",
-    route: "adminAppointments",
-    title: "Appointments",
-  },
-  {
-    name: "Admin Clients",
-    icon: "fa fa-user",
-    route: "adminClients",
-    title: "Clients",
-  },
-  {
-    name: "Admin lawyers",
-    icon: "fa fa-user",
-    route: "adminLawyers",
-    title: "Lawyers",
-  },
-  {
-    name: "AdminUsers",
-    icon: "fa fa-users",
-    route: "adminUsers",
-    title: "Users",
-  },
-  {
-    name: "AdminRoles",
-    icon: "fa fa-user-shield",
-    route: "adminRoles",
-    title: "Roles",
-  },
-  {
-    name: "AdminPermissions",
-    icon: "fa fa-lock-open",
-    route: "adminPermissions",
-    title: "Permissions",
-  },
-  {
-    name: "AdminProfile",
-    icon: "fa fa-user",
-    route: "adminProfile",
-    title: "Profile",
-  },
-]);
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/useAuthStore";
+import sidebarLinks from "@/data/sidebarLinks";
+
+const { authStateUser } = storeToRefs(useAuthStore());
 </script>
 <template>
-  <aside
-    class="h-screen bg-color2 border-r flex flex-col justify-between p-4 overflow-scroll no-scrollbar absolute w-60 top-0"
-  >
-    <div class="flex flex-col gap-3">
-      <router-link
-        :to="{ name: 'admin' }"
-        class="flex justify-center flex-col items-center"
-      >
-        <div class="h-8 w-8 text-color1">
-          <Logo />
+  <div class="h-screen flex flex-col w-full bg-color2 text-white">
+    <div class="flex flex-col justify-center items-center pt-10 pb-7">
+      <p class="rounded-full">
+        <img :src="authStateUser?.avatar!" alt="" class="rounded-full h-20 w-20">
+      </p>
+      <p>{{ authStateUser?.username }}</p>
+      <p>{{ authStateUser?.email }}</p>
+    </div>
+    <hr class="shadow text-2xl bg-neutral-300">
+    <div class="flex flex-col px-4 pt-10 gap-4">
+      <router-link v-for="{ icon, title, path } in sidebarLinks.admin" :to="{ name: path }" :key="title"
+        class="flex items-center gap-4 p-2 rounded-md hover: hover:text-color1 bg-opacity-25 transition-all ease-in duration-200 text-xl border">
+        <div>
+          <fa :icon="icon"></fa>
+          <span class="ml-2" text->{{ title }}</span>
         </div>
-        <h1 class="block text-color1">Validient</h1>
-      </router-link>
-      <hr />
-      <div class="flex flex-col gap-4 overflow-scroll no-scrollbar">
-        <router-link
-          v-for="{ icon, name, route, title } in menuItems"
-          :to="{ name: route }"
-          :key="name"
-          class="flex items-center gap-4 p-2 rounded-md text-color7 hover:bg-neutral-200 hover:text-color2 bg-opacity-25 transition-all ease-in duration-200 text-xl"
-        >
-          <div>
-            <fa :icon="icon"></fa>
-            <span class="ml-2">{{ title }}</span>
-          </div>
-        </router-link>
-      </div>
-    </div>
-    <div>
-      <router-link :to="{name:'logout'}" class="bg-color7 text-color2 w-full py-2 rounded-md block text-center">
-        Logout
       </router-link>
     </div>
-  </aside>
+
+  </div>
 </template>
 <style scoped>
 .router-link-exact-active {

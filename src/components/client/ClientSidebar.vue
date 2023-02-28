@@ -39,7 +39,7 @@ const menuItems = ref<Array<MenuItem>>([
             <p>{{ authStateUser?.username }}</p>
             <p>{{authStateUser?.email}}</p>
         </div>
-        <hr class="shadow text-2xl bg-neutral-300">
+        <hr class="text-2xl bg--neutral-500 mx-4 h-1">
         <div class="flex flex-col px-4 pt-10 gap-4">
             <router-link v-for="{ icon, name, route, title } in menuItems" :to="{ name: route }" :key="name"
                 class="flex items-center gap-4 p-2 rounded-md hover: hover:text-color1 bg-opacity-25 transition-all ease-in duration-200 text-xl border">
