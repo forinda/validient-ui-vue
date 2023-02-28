@@ -13,7 +13,7 @@
         <router-link :to="{ name: 'home' }" class="text-blue-500 border-blue-500"
           >Homepage</router-link
         >
-        <router-link :to="{ name: 'adminDashboard' }" class="text-blue-500"
+        <router-link :to="{ name: 'admin' }" class="text-blue-500"
           >Dashboard</router-link
         >
       </div>

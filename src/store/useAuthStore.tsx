@@ -61,6 +61,28 @@ export const useAuthStore = defineStore({
     },
     registrationErrors: (state: AuthState) => state.errors.registerErrors,
     loginErrors: (state: AuthState) => state.errors.loginErrors,
+    authUserRoles: (state: AuthState) => {
+      const roles = state.user?.roles.map((role) => role.name.toLowerCase());
+      return roles;
+    },
+    authUserAuthorities: (state: AuthState) => {
+      const authorities = state.user?.authorities.map((authority) =>
+        authority.authority.toUpperCase()
+      );
+      return authorities;
+    },
+    isAdmin: (state: AuthState) => {
+      const roles = state.user?.roles.map((role) => role.name.toLowerCase());
+      return roles?.includes("admin");
+    },
+    isUser: (state: AuthState) => {
+      const roles = state.user?.roles.map((role) => role.name.toLowerCase());
+      return roles?.includes("user");
+    },
+    isLawyer: (state: AuthState) => {
+      const roles = state.user?.roles.map((role) => role.name.toLowerCase());
+      return roles?.includes("lawyer");
+    },
   },
   actions: {
     async loginUser(user: SignInFormPropType) {
@@ -121,6 +143,12 @@ export const useAuthStore = defineStore({
       } finally {
         this.loading = false;
       }
+    },
+    async logoutUser() {
+      this.user = null;
+      this.accessToken = null;
+      this.authenticated = false;
+      localStorage.removeItem(stateKeys.authState);
     },
     resetErrors() {
       this.errors = {

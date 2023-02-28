@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { useAuthStore } from "@/store/useAuthStore";
+import { RouteMetaType } from "@/typings";
 
 const baseRoutes: RouteRecordRaw = {
   path: "/",
@@ -56,6 +57,26 @@ const baseRoutes: RouteRecordRaw = {
       path: "/faq",
       name: "faq",
       component: () => /**webpackChunkName:FAQ */ import("@/views/FAQs.vue"),
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      meta: {
+        requiresAuth: true,
+        authorities: ["USER", "ADMIN", "LAWYER"],
+        roles: ["user", "admin", "lawyer"],
+        title: "Logout",
+      } satisfies RouteMetaType,
+      component: () =>
+        /**webpackChunkName:Logout */ import("@/views/Logout.vue"),
+      beforeEnter: async (to, from, next) => {
+        const authStore = useAuthStore();
+        if (authStore.authStateAuthenticated) {
+          await authStore.logoutUser();
+          next({ name: "home" });
+        }
+        next();
+      },
     },
   ],
 };

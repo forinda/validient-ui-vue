@@ -1,28 +1,25 @@
+import { RouteMetaType } from "@/typings";
 import { RouteRecordRaw } from "vue-router";
 
 const adminRoutes: RouteRecordRaw = {
-  path: "/admin",
-  name: "admin",
-  component: () =>
-    /**webpackChunkName:AdminLayout */ import("@/layouts/AdminLayout.vue"),
-  children: [
-    {
-      path: "",
-      name: "adminBase",
-      component: () =>
-        /**webpackChunkName:Login */ import("@/views/admin/BaseAdmin.vue"),
-    },
-    {
-      path: "dashboard",
-      name: "adminDashboard",
-      component: () =>
-        /**webpackChunkName:Dashboard */ import(
-          "@/layouts/AdminDashboardLayout.vue"
-        ),
+  
+    path: "/admin",
+    name: "adminDashboard",
+    meta: {
+      authorities: ["admin"],
+      title: "Admin",
+      requiresAuth: true,
+      roles: ['admin'],
+    } satisfies RouteMetaType,
+    component: () =>
+      /**webpackChunkName:Dashboard */ import(
+        "@/layouts/AdminDashboardLayout.vue"
+      ),
+  
       children: [
         {
           path: "",
-          name: "adminDashboardOverview",
+          name: "admin",
           component: () =>
             /**webpackChunkName:Overview */ import(
               "@/components/admin/AdminOverview.vue"
@@ -100,9 +97,7 @@ const adminRoutes: RouteRecordRaw = {
               "@/components/admin/AdminAppointments.vue"
             ),
         },
-      ],
-    },
-  ],
+      ]
 };
 
 export default adminRoutes;

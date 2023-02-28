@@ -1,18 +1,26 @@
+import { RouteMetaType } from "@/typings";
 import { RouteRecordRaw } from "vue-router";
 
 const clientRoutes: RouteRecordRaw = {
-  path: "/profile",
-  name: "Client",
+  path: "/client",
+  name: "clientWrapper",
+  meta: {
+    authorities: ["USER"],
+    title: "Client",
+    requiresAuth: true,
+    roles: ['user'],
+  } satisfies RouteMetaType,
   component: () =>
     /**webpackChunkName:ClientLayout */ import("@/layouts/ClientLayout.vue"),
   children: [
     {
-      path:"",
-      name:"ClientDashboardLayout",
-      component:()=>
-       /**webpackChunkName:ClientLayout */ import("@/layouts/ClientDashboardLayout.vue"),
-       children:[
-        
+      path: "",
+      name: "client",
+      component: () =>
+        /**webpackChunkName:ClientLayout */ import(
+          "@/layouts/ClientDashboardLayout.vue"
+        ),
+      children: [
         {
           path: "cases",
           name: "ClientCases",
@@ -29,9 +37,8 @@ const clientRoutes: RouteRecordRaw = {
               "@/components/client/ClientSchedule.vue"
             ),
         },
-
-       ]
-    }
+      ],
+    },
   ],
 };
 

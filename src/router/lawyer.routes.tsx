@@ -1,8 +1,15 @@
+import { RouteMetaType } from "@/typings";
 import { RouteRecordRaw } from "vue-router";
 
 const lawyerRoutes: RouteRecordRaw = {
   path: "/lawyer",
-  name: "LawyerLayout",
+  name: "LawyerWrapper",
+  meta: {
+    authorities: ["LAWYER"],
+    title: "lawyer",
+    requiresAuth: true,
+    roles: ["lawyer"],
+  } satisfies RouteMetaType,
   component: () =>
     /**webpackChunkName:LawyerLayout*/ import("@/layouts/LawyerLayout.vue"),
   children: [
@@ -15,23 +22,27 @@ const lawyerRoutes: RouteRecordRaw = {
         ),
       children: [
         {
-          path:"cases",
-          name:"LawyerCases",
-          component:()=>
-           /**webpackChunkName:LawyerCases*/
-           "@/components/lawyer/LawyerCases.vue"
-
-
+          path: "",
+          name: "lawyer",
+          component: () =>
+            /**webpackChunkName:LawyerOverview*/ import(
+              "@/components/lawyer/LawyerOverview.vue"
+            ),
         },
         {
-          path:"schedules",
-          name:"LawyerSchedules",
-          component:()=>
-           /**webpackChunkName:LawyerCases*/
-           "@/components/lawyer/LawyerSchedules.vue"
-
-
-        }
+          path: "cases",
+          name: "LawyerCases",
+          component: () =>
+            /**webpackChunkName:LawyerCases*/
+            "@/components/lawyer/LawyerCases.vue",
+        },
+        {
+          path: "schedules",
+          name: "LawyerSchedules",
+          component: () =>
+            /**webpackChunkName:LawyerCases*/
+            "@/components/lawyer/LawyerSchedules.vue",
+        },
       ],
     },
   ],

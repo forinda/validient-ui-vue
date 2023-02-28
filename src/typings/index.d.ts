@@ -43,7 +43,6 @@ export type UserAuthorityType = {
 
 export type RouteMetaType = {
   title: string;
-  description: string;
   requiresAuth: boolean;
   authorities: string[];
   roles: string[];

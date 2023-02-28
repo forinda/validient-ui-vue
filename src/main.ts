@@ -2,15 +2,33 @@ import "./style.css";
 
 import App from "./App.vue";
 import Fa from "@/plugins/fontawesome";
-import VCalendar from 'v-calendar';
+import { RouteMetaType } from "@/typings";
+import VCalendar from "v-calendar";
 import VueApexCharts from "vue3-apexcharts";
 import { createApp } from "vue";
 import piniaPlugin from "@/plugins/piniaPlugin";
 import router from "@/router";
+import useAuthStore from "@/store/useAuthStore";
 
 router.beforeEach((to, from, next) => {
-  console.log("beforeEach");
-  console.log({ to, from });
+  const store = useAuthStore();
+  const { requiresAuth, authorities, roles, title } = to.meta as RouteMetaType;
+
+  if (requiresAuth) {
+    if (!store.authStateAuthenticated) {
+      next({ name: "login" });
+    } 
+    else if (authorities.length > 0) {
+      const authMatch = roles.some((role) => {
+        if (store.authUserRoles?.includes(role)) {
+          return true;
+        }
+      });
+      if (!authMatch) {
+        next({ name: "home" });
+      }
+    }
+  }
   next();
 });
 

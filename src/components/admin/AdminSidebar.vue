@@ -9,58 +9,52 @@ type MenuItem = {
 };
 const menuItems = ref<Array<MenuItem>>([
   {
-    name: "AdminDashboardOverview",
+    name: "admin",
     icon: "fa fa-dashboard",
-    route: "AdminDashboardOverview",
+    route: "admin",
     title: "Dashboard",
   },
   {
     name: "Admin Appointments",
     icon: "fa fa-calendar",
-    route: "AdminAppointments",
+    route: "adminAppointments",
     title: "Appointments",
   },
   {
     name: "Admin Clients",
     icon: "fa fa-user",
-    route: "AdminClients",
+    route: "adminClients",
     title: "Clients",
   },
   {
     name: "Admin lawyers",
     icon: "fa fa-user",
-    route: "AdminLawyers",
+    route: "adminLawyers",
     title: "Lawyers",
   },
   {
     name: "AdminUsers",
     icon: "fa fa-users",
-    route: "AdminUsers",
+    route: "adminUsers",
     title: "Users",
   },
   {
     name: "AdminRoles",
     icon: "fa fa-user-shield",
-    route: "AdminRoles",
+    route: "adminRoles",
     title: "Roles",
   },
   {
     name: "AdminPermissions",
     icon: "fa fa-lock-open",
-    route: "AdminPermissions",
+    route: "adminPermissions",
     title: "Permissions",
   },
   {
     name: "AdminProfile",
     icon: "fa fa-user",
-    route: "AdminProfile",
+    route: "adminProfile",
     title: "Profile",
-  },
-  {
-    name: "AdminSettings",
-    icon: "fa fa-cog",
-    route: "AdminSettings",
-    title: "Settings",
   },
 ]);
 </script>
@@ -94,9 +88,9 @@ const menuItems = ref<Array<MenuItem>>([
       </div>
     </div>
     <div>
-      <button class="bg-color7 text-color2 w-full py-2 rounded-md">
+      <router-link :to="{name:'logout'}" class="bg-color7 text-color2 w-full py-2 rounded-md block text-center">
         Logout
-      </button>
+      </router-link>
     </div>
   </aside>
 </template>
