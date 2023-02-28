@@ -97,3 +97,25 @@ export type CaseType = {
   name: string;
   description: string;
 };
+
+  export type AppointmentType = {
+    title: string;
+    description: string;
+    year: number;
+    month: number;
+    date: number;
+    startHour: number;
+    startMinute: number;
+    owner: number;
+    members: number[];
+  }
+  export type ScheduleType = {
+    id: number;
+    title: string;
+    description: string;
+    year: number;
+    month: number;
+    date: number;
+    startHour: number;
+    startMinute: number;
+  };

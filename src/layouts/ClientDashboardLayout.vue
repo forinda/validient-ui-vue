@@ -1,16 +1,14 @@
 <template>
   <div class="flex flex-col ">
-    <div class="h-24">
-      <client-header />
-    </div>
-    <div class="grid grid-cols-[280px_1fr] h-[calc(100vh_-_9rem)] pt-5">
-      <div class="shadow-md">
+      <div class="shadow-md bg-neutral-100 fixed w-60">
         <client-sidebar />
       </div>
-      <div class="bg-color3">
+      <div class="ml-60 ">
+      <client-header></client-header>
+      <div class="min-h-screen">
         <router-view></router-view>
       </div>
-    </div>
+      </div>
   </div>
   
 </template>
