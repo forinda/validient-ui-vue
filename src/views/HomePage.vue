@@ -1,7 +1,7 @@
 <template>
     <main class="w-full bg-white py-10">
         <!-- Hero section -->
-        <div class="mx-auto max-w-7xl w-full min-h-[80vh] flex flex-col-reverse lg:flex-row p-4">
+        <div class="mx-auto max-w-7xl w-full min-h-[80vh] flex flex-col-reverse lg:flex-row p-4 overflow-hidden">
             <div class="w-full lg:w-1/2 flex items-center justify-center pt-7">
                 <div class="flex gap-6 flex-col">
                     <h1 class="text-5xl font-bold text-color2 font-catanta">We are experts in legal profession</h1>
@@ -66,7 +66,7 @@
         </div>
         <hr>
         <!-- Teams section -->
-        <div class="bg-color3">
+        <div class="bg-color3 overflow-hidden ">
             <div class="min-h-[40vh] bg-color2 py-20">
                 <div class="max-w-7xl mx-auto">
                     <h1 class="text-color1 text-xl font-bold uppercase">Lawyers</h1>
