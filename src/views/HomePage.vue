@@ -1,8 +1,8 @@
 <template>
     <main class="w-full bg-white py-10">
         <!-- Hero section -->
-        <div class="mx-auto max-w-7xl w-full min-h-[80vh] flex flex-col-reverse lg:flex-row p-4">
-            <div class="w-full lg:w-1/2 flex items-center">
+        <div class="mx-auto max-w-7xl w-full min-h-[80vh] flex flex-col-reverse lg:flex-row p-4 overflow-hidden">
+            <div class="w-full lg:w-1/2 flex items-center justify-center pt-7">
                 <div class="flex gap-6 flex-col">
                     <h1 class="text-5xl font-bold text-color2 font-catanta">We are experts in legal profession</h1>
                     <p class="text-xl">
@@ -17,7 +17,8 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full lg:w-1/2 relative flex items-center justify-center">
+
+            <div class="w-full lg:w-1/2 relative flex items-center justify-center pb-35 pt-20 overflow-hidden">
                 <span class="bg-color2 h-48 w-48 rounded-full absolute left-12"></span>
                 <span
                     class="h-64 w-64 border-r-color1 border-r-8 rounded-tr-full  border-t-8 border-t-color1 absolute rotate-180 right-8"></span>
@@ -39,6 +40,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <hr>
         <!-- Services -->
@@ -64,7 +66,7 @@
         </div>
         <hr>
         <!-- Teams section -->
-        <div class="bg-color3">
+        <div class="bg-color3 overflow-hidden ">
             <div class="min-h-[40vh] bg-color2 py-20">
                 <div class="max-w-7xl mx-auto">
                     <h1 class="text-color1 text-xl font-bold uppercase">Lawyers</h1>
@@ -78,8 +80,8 @@
                     <!-- Team absolute -->
                     <div
                         class="mx-4 sm:mx-0 w-full p-6 absolute -top-48 bg-color3 min-h-fit h-fit rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div v-for="({ firstName, lastName, lawyerType, image }) of teamUsers"
-                            :key="firstName + lastName" class="bg-neutral-100 h-fit">
+                        <div v-for="({ firstName, lastName, lawyerType, image }) of teamUsers" :key="firstName + lastName"
+                            class="bg-neutral-100 h-fit">
 
                             <div class="w-full overflow-hidden rounded">
                                 <img :src="image" alt="" class="w-full object-cover aspect-square">
@@ -93,7 +95,7 @@
                         </div>
                     </div>
                     <!-- Secretary section -->
-                    <div class="py-28 mt-64">
+                    <div class="py-28 mt-64 overflow-hidden">
                         <div class="bg-white w-full py-4 rounded-md shadow-lg flex flex-col-reverse lg:flex-row">
                             <div class="p-10 flex flex-col gap-4 w-full lg:w-1/2">
                                 <h2 class="text-3xl font-bold font-rubik text-color2">Are you looking for a lawyer?</h2>
@@ -103,24 +105,23 @@
                                     Odio qui facere omnis delectus magnam minima?
                                 </p>
                                 <div>
-                                    <button
-                                        class="bg-color1 text py-2 px-4 text-2xl flex items-center gap-4 rounded-full">
+                                    <button class="bg-color1 text py-2 px-4 text-2xl flex items-center gap-4 rounded-full">
                                         <span class="text-white"> Contact us </span>
                                         <fa icon="fa fa-arrow-right" class="p-2 bg-white rounded-full text-color1"></fa>
                                     </button>
                                 </div>
                             </div>
-                            <div class="w-full lg:w-1/2 relative p-10 h-fit">
+                            <div class="w-full lg:w-1/2 lg:relative p-10 ">
                                 <div
-                                    class="absolute h-48 w-48 bg-color1 left-1/2 bg-opacity-30 rounded-b-full rounded-tl-full z-[1]">
+                                    class=" h-48 w-48 bg-color1 left-1/2 bg-opacity-30 rounded-b-full rounded-tl-full z-[1] lg:absolute">
                                 </div>
-                                <div class="absolute h-10 w-10 bg-color2 top-1/2 left-1/3"></div>
-                                <div class="absolute h-32 w-32 bg-color6 top-1/2 bg-opacity-20 rounded-full bottom-8">
+                                <div class=" h-10 w-10 bg-color2 top-1/2 left-1/3 lg:absolute"></div>
+                                <div class="h-32 w-32 bg-color6 top-1/2 bg-opacity-20 rounded-full bottom-8 lg:absolute">
                                 </div>
-                                <div class="absolute h-10 w-10 bg-color4 right-4 bg-opacity-25 rounded-full"></div>
+                                <div class="h-10 w-10 bg-color4 right-4 bg-opacity-25 rounded-full lg:absolute"></div>
                                 <div
-                                    class="h-full w-full flex justify-center items-center z-40 absolute top-0 bottom-0 mx-auto">
-                                    <img src="/woman-folding hands.png" alt="" class="h-96 w-96">
+                                    class="h-full w-full flex justify-center items-center z-40  top-0 bottom-0  mx-auto lg:absolute">
+                                    <img src="/woman-folding hands.png" alt="" class="h-90 w-90">
                                 </div>
                             </div>
                         </div>
@@ -129,8 +130,8 @@
             </div>
         </div>
         <!-- Footer -->
-        <footer class="bg-white pt-10">
-            <div class="max-w-7xl mx-auto grid lg:grid-cols-4 lg:gap-4 place-items-start p-4">
+        <footer class="bg-white pt-10 ">
+            <div class="max-w-7xl mx-auto  grid  lg:grid-cols-4 gap-4 lg:place-items-start p-4">
                 <div class="flex flex-col gap-2">
                     <h1 class="text-3xl font-bold text-color1">Validient</h1>
                     <p class="text-lg text-color2">
@@ -300,6 +301,4 @@ const teamUsers = ref<Array<{
 const cuttentYear = computed(() => new Date().getFullYear())
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
