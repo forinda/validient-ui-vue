@@ -6,6 +6,7 @@ specifiers:
   '@fortawesome/free-regular-svg-icons': ^6.3.0
   '@fortawesome/free-solid-svg-icons': ^6.3.0
   '@fortawesome/vue-fontawesome': ^3.0.3
+  '@tailwindcss/forms': ^0.5.3
   '@types/node': ^18.13.0
   '@vitejs/plugin-vue': ^4.0.0
   '@vuelidate/core': ^2.0.0
@@ -47,6 +48,7 @@ dependencies:
   vue3-apexcharts: 1.4.1_v5z6rlwg2irqyor7ff5bo5htta
 
 devDependencies:
+  '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.6
   '@types/node': 18.13.0
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.1+vue@3.2.47
   autoprefixer: 10.4.13_postcss@8.4.21
@@ -351,6 +353,15 @@ packages:
   /@popperjs/core/2.4.0:
     resolution: {integrity: sha512-NMrDy6EWh9TPdSRiHmHH2ye1v5U0gBD7pRYwSwJvomx7Bm4GG04vu63dYiVzebLOx2obPpJugew06xVP0Nk7hA==}
     dev: false
+
+  /@tailwindcss/forms/0.5.3_tailwindcss@3.2.6:
+    resolution: {integrity: sha512-y5mb86JUoiUgBjY/o6FJSFZSEttfb3Q5gllE4xoKjAAD+vBrnIhE4dViwUuow3va8mpH4s9jyUbUbrRGoRdc2Q==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
+    dependencies:
+      mini-svg-data-uri: 1.4.4
+      tailwindcss: 3.2.6_postcss@8.4.21
+    dev: true
 
   /@types/http-proxy/1.17.10:
     resolution: {integrity: sha512-Qs5aULi+zV1bwKAg5z1PWnDXWmsn+LxIvUGv6E2+OOMYhclZMO+OXd9pYVf2gLykf2I7IV2u7oTHwChPNsvJ7g==}
@@ -942,6 +953,11 @@ packages:
     dependencies:
       mime-db: 1.52.0
     dev: false
+
+  /mini-svg-data-uri/1.4.4:
+    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
+    hasBin: true
+    dev: true
 
   /minimatch/5.1.6:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
