@@ -11,6 +11,7 @@ import {
   sameAs,
 } from "@vuelidate/validators";
 import useAuthStore from "@/store/useAuthStore";
+import genderInfo from "@/data/gender";
 // const { authStateLoading, registrationErrors } = storeToRefs(useAuthStore())
 const store = useAuthStore();
 type formSteps = "personal-info" | "password";
@@ -59,29 +60,7 @@ const handleNext = (step: formSteps) => {
   }
   currentStep.value = step;
 };
-const genderInfo = ref<
-  Array<{
-    value: GenderType;
-    id: string;
-    checked?: boolean;
-  }>
->([
-  {
-    id: "Male",
-    value: "MALE",
-    checked: false,
-  },
-  {
-    id: "Female",
-    value: "FEMALE",
-    checked: false,
-  },
-  {
-    id: "Other",
-    value: "OTHER",
-    checked: true,
-  },
-]);
+
 const submitForm = async () => {
   console.log(store.registrationErrors);
   

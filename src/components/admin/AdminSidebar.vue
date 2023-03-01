@@ -8,7 +8,7 @@ import sidebarLinks from "@/data/sidebarLinks";
 const { authStateUser } = storeToRefs(useAuthStore());
 </script>
 <template>
-  <div class="h-screen flex flex-col w-full bg-color2 text-white">
+  <div class="h-screen flex flex-col w-full bg-color2 text-white overflow-y-scroll">
     <div class="flex flex-col justify-center items-center pt-10 pb-7">
       <p class="rounded-full">
         <img :src="authStateUser?.avatar!" alt="" class="rounded-full h-20 w-20">

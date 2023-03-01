@@ -1,5 +1,6 @@
 export type GenderType = "MALE" | "FEMALE" | "OTHER";
 
+
 export type UserType = {
   [key: string]: any;
   id: number;

@@ -5,10 +5,8 @@ type sideBarLink = {
 };
 
 type SidebarLinkMap<T> = {
-    [key: string]: T[];
+  [key: string]: T[];
 };
-
-
 
 const sidebarLinks = {
   admin: [
@@ -16,7 +14,8 @@ const sidebarLinks = {
       icon: "fa fa-dashboard",
       path: "admin",
       title: "Dashboard",
-    }, {
+    },
+    {
       icon: "fa fa-calendar",
       path: "adminCalendar",
       title: "Calendar",
@@ -55,6 +54,16 @@ const sidebarLinks = {
       icon: "fa fa-user",
       path: "adminProfile",
       title: "Profile",
+    },
+    {
+      icon: "fa fa-cog",
+      path: "caseTypes",
+      title: "Case Types",
+    },
+    {
+      icon: "fa fa-cog",
+      path: "caseStatuses",
+      title: "Case Statuses",
     },
   ],
   client: [],
