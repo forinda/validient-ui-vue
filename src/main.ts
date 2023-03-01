@@ -7,6 +7,7 @@ import { RouteMetaType } from "@/typings";
 import VCalendar from "v-calendar";
 import VueApexCharts from "vue3-apexcharts";
 import { createApp } from "vue";
+import filterUserRoles from "./utils/roleFilter";
 import piniaPlugin from "@/plugins/piniaPlugin";
 import router from "@/router";
 import useAuthStore from "@/store/useAuthStore";
@@ -19,10 +20,12 @@ router.beforeEach((to, from, next) => {
     if (!store.authStateAuthenticated) {
       next({ name: "login" });
     } else if (authorities.length > 0) {
+      const userRole = filterUserRoles(store.authUserRoles!) as
+        | "admin"
+        | "user"
+        | "lawyer";
       const authMatch = roles.some((role) => {
-        if (store.authUserRoles?.includes(role)) {
-          return true;
-        }
+        return role === userRole;
       });
       if (!authMatch) {
         next({ name: "home" });
