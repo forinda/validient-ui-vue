@@ -6,11 +6,7 @@ import { ref, computed, onMounted } from "vue"
 import { publicAxios } from '@/api';
 import filterUserRoles from '@/utils/roleFilter';
 
-const showModal = ref(false)
-const close = () => {
-  showModal.value = false
-}
-const { authStateUser, authStateAccessToken } = storeToRefs(useAuthStore())
+const { authStateAccessToken } = storeToRefs(useAuthStore())
 
 const tableBody = ref<Array<UserType>>(
   []
@@ -140,7 +136,7 @@ const computedUserStats = computed((): userStatsType => {
 <template>
   <main class="p-4 flex flex-col gap-4">
     <!-- Quick actions -->
-    <div class="bg-white border-b-color2 border-b p-4 rounded flex justify-between items-center">
+    <div class="rounded-md border-b p-4 flex justify-between items-center">
       <div>
         <h1 class="text-2xl font-bold uppercase">
           Quick actions
@@ -155,14 +151,14 @@ const computedUserStats = computed((): userStatsType => {
     <div class="bg-white w-full border">
       <div class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-2 w-full gap-4 bg-white p-4 mx-4">
         <div v-for="key of Object.keys(computedUserStats)"
-          class=" bg-white h-full flex flex-col p-4 justify-between border">
+          class=" h-full flex flex-col p-4 justify-between border rounded-lg bg-color8">
           <div class="flex justify-between">
             <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ computedUserStats?.[key].count }}</h1>
+              <h1 class="color-1 font-bold text-3xl">{{ computedUserStats?.[key].count.toString().padStart(2, '0') }}</h1>
               <p>{{ computedUserStats?.[key].title }}</p>
             </div>
             <div>
-              <fa :icon="computedUserStats?.[key].icon" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
+              <fa :icon="computedUserStats?.[key].icon" class="text-color2 bg-color3 p-4 rounded-full h-8 w-8"></fa>
             </div>
           </div>
           <div class="h-fit border-t">
