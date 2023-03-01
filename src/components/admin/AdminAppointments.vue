@@ -208,7 +208,7 @@ const handleFormSubmit = async () => {
 }
 </script>
 <template>
-  <main>
+  <main class="flex-col py-10">
     <div>
       <div>
 
@@ -217,36 +217,34 @@ const handleFormSubmit = async () => {
     <!-- create new appointment button -->
     <div class="flex justify-end py-4 px-4">
 
-      <RouterLink to="/admin/appointments/create">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           @click.prevent="toggleModal(true)">
           Create New Appointment
         </button>
-      </RouterLink>
     </div>
     <!-- create appointment modal -->
     <div
-      class="fixed top-0 w-screen min-h-screen overflow-y-auto bg-gray-500 opacity-75 left-0 z-[200000] flex justify-center items-center"
+      class="fixed top-0 w-screen min-h-screen overflow-y-auto bg-gray-500 opacity-95 left-0 z-[999999999] flex justify-center items-center"
       :class="{ 'hidden': !modalOpen, 'block': modalOpen }" @click="toggleModal(false)">
       <form action="" @click.pre="formClick" @submit.prevent="handleFormSubmit"
-        class="w-full lg:max-w-2xl min-[20rem] bg-white rounded-lg p-4 lg:p-10">
+        class="w-full lg:max-w-2xl min-[20rem] bg-white rounded-lg p-4 lg:p-10 ">
         <div>
           <h1 class="text-center uppercase my-1 font-bold">Create new appointment</h1>
         </div>
         <div class="flex flex-col gap-2">
           <label for="" class="text-xl font-bold">Appointment title</label>
-          <input required type="text" placeholder="Appointment title...." class="rounded invalid:border-red-300"
+          <input required type="text" placeholder="Appointment title...." class="rounded "
             v-model="newAppointment.title">
         </div>
         <div class="flex flex-col gap-2">
           <label for="" class="text-xl font-bold">Schedule Date and time</label>
           <input required type="datetime-local" placeholder="Appointment time and date...."
-            class="rounded invalid:border-red-200" v-model="newAppointmentDateTime">
+            class="rounded" v-model="newAppointmentDateTime">
         </div>
         <div class="flex flex-col gap-2">
           <label for="" class="text-xl font-bold">Appointment descriription</label>
           <textarea required name="" id="" placeholder="Appointment description...." v-model="newAppointment.description"
-            class="w-full h-32 rounded text-md invalid:border-red-300"></textarea>
+            class="w-full h-32 rounded text-md"></textarea>
         </div>
         <div class="flex flex-col gap-2 ">
           <label for="" class="text-xl font-bold">Select members</label>
