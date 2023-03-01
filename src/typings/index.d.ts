@@ -103,7 +103,21 @@ export type CaseStatusType = {
   description: string;
 };
 
+
+export type NewAppointmentType = {
+  title: string;
+  description: string;
+  year: number;
+  month: number;
+  date: number;
+  startHour: number;
+  startMinute: number;
+  owner: number;
+  members: number[];
+};
+
 export type AppointmentType = {
+  id: number;
   title: string;
   description: string;
   year: number;

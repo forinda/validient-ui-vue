@@ -2,6 +2,7 @@ import "./style.css";
 
 import App from "./App.vue";
 import Fa from "@/plugins/fontawesome";
+import Multiselect from "@vueform/multiselect";
 import { RouteMetaType } from "@/typings";
 import VCalendar from "v-calendar";
 import VueApexCharts from "vue3-apexcharts";
@@ -17,8 +18,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     if (!store.authStateAuthenticated) {
       next({ name: "login" });
-    } 
-    else if (authorities.length > 0) {
+    } else if (authorities.length > 0) {
       const authMatch = roles.some((role) => {
         if (store.authUserRoles?.includes(role)) {
           return true;
@@ -37,11 +37,12 @@ router.beforeResolve((to, from, next) => {
   console.log({ to, from });
   next();
 });
-
+/**@ts-ignore */
 createApp(App)
   .component("fa", Fa)
   .use(VCalendar, {})
   .use(VueApexCharts)
   .use(router)
+  .component("multi-select", Multiselect)
   .use(piniaPlugin)
   .mount("#app");

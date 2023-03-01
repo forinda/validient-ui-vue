@@ -16,6 +16,10 @@ const sidebarLinks = {
       icon: "fa fa-dashboard",
       path: "admin",
       title: "Dashboard",
+    }, {
+      icon: "fa fa-calendar",
+      path: "adminCalendar",
+      title: "Calendar",
     },
     {
       icon: "fa fa-calendar",

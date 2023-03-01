@@ -64,6 +64,14 @@ const adminRoutes: RouteRecordRaw = {
             /**webpackChunkName:Profile */ import(
               "@/components/admin/AdminProfile.vue"
             ),
+        },{
+          path: "calendar",
+          name: "adminCalendar",
+          component: () =>
+            /**webpackChunkName:Caleandar */ import(
+              "@/components/admin/AdminCalendar.vue"
+            ),
+
         },
         {
           path: "lawyers",
