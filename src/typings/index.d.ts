@@ -146,14 +146,6 @@ export type CaseDefendantType = {
   lastName: string;
   identity: string;
 };
-const cf = {
-  title: "string",
-  description: "string",
-  caseType: 0,
-  status: 0,
-  lawyer: 0,
-  dateFiled: "string",
-};
 
 export type NewCaseFilingType = {
   title: string;
@@ -176,16 +168,6 @@ export type caseFilingType = {
   plaintiff: UserType;
 };
 
-const appointment = {
-  id: 0,
-  title: "string",
-  description: "string",
-  year: 0,
-  month: 0,
-  date: 0,
-  startHour: 0,
-  startMinute: 0,
-};
 
 export type AppointmentType = {
   id: number;

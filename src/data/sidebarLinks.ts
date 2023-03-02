@@ -65,8 +65,20 @@ const sidebarLinks = {
       path: "caseStatuses",
       title: "Case Statuses",
     },
+
   ],
-  client: [],
+  client: [
+    {
+      icon: "fa fa-dashboard",
+      path: "client",
+      title: "Dashboard",
+    },
+    {
+      icon: "fa fa-calendar",
+      path: "clientSchedule",
+      title: "Schedule",
+    }
+  ],
   lawyer: [],
 } satisfies SidebarLinkMap<sideBarLink>;
 

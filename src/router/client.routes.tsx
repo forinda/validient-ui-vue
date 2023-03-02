@@ -39,7 +39,7 @@ const clientRoutes: RouteRecordRaw = {
         },
         {
           path: "schedule",
-          name: "ClientSchedule",
+          name: "clientSchedule",
           component: () =>
             /**webpackChunkName:ClientSchedule */ import(
               "@/components/client/ClientSchedule.vue"
