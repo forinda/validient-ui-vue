@@ -25,7 +25,7 @@ const handleSubmit = async (e: Event) => {
         newCaseStatus.value,
         config
       );
-      response.status === 201 && router.push({ name: "caseStatuses" });
+      response && router.push({ name: "caseStatuses" });
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +37,7 @@ const handleSubmit = async (e: Event) => {
 </script>
 <template>
   <div class="w-full h-full flex justify-center py-10">
-    <form @submit.prevent="handleSubmit" class="form-component">
+    <form @submit.prevent="handleSubmit" class="form-component border">
       <div>
         <h1 class="text-2xl font-bold text-center">New Case Status</h1>
       </div>
@@ -49,7 +49,7 @@ const handleSubmit = async (e: Event) => {
           id="name"
           v-model="newCaseStatus.name"
           class="input-field"
-          placeholder="Case type name eg."
+          placeholder="Case status name eg."
         />
       </div>
       <div class="input-wrapper">
@@ -60,6 +60,7 @@ const handleSubmit = async (e: Event) => {
           id="description"
           v-model="newCaseStatus.description"
           class="input-field"
+          placeholder="Description"
         />
       </div>
       <button type="submit" class="submit-button">Submit</button>

@@ -1,5 +1,28 @@
 export type GenderType = "MALE" | "FEMALE" | "OTHER";
+export type LawyerHourlyRateType = {
+  id: number;
+  label: string;
+  rate: number;
+  maxYears: number;
+};
+export type NewLawyerType = {
+  verifiedYear: number;
+  hourlyRate: number;
+  practiceAreas: string;
+  notes: string;
+  caseType: number;
+};
 
+export type LawyerType = {
+  id: number;
+  verifiedYear: number;
+  hourlyRate: number;
+  practiceAreas: string;
+  notes: string;
+  identification: string;
+  caseType: CaseType;
+  user: UserType;
+};
 
 export type UserType = {
   [key: string]: any;
@@ -16,17 +39,6 @@ export type UserType = {
   accountNonExpired: boolean;
   accountNonLocked: boolean;
   credentialsNonExpired: boolean;
-};
-export type LawyerTypes = {
-  [key: string]: any;
-  id: number;
-  email: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  avatar: string | null;
-  gender: GenderType;
-  caseType: string;
 };
 export type ClientTypes = {
   [key: string]: any;
@@ -83,16 +95,6 @@ export type SignInFormPropType = {
   password: string;
 };
 
-export type LawyerType = {
-  id: number;
-  verifiedYear: number;
-  hourlyRate: number;
-  practiceAreas: string;
-  notes: string;
-  identification: string;
-  specialization: CaseType[];
-};
-
 export type CaseType = {
   id: number;
   name: string;
@@ -103,7 +105,6 @@ export type CaseStatusType = {
   name: string;
   description: string;
 };
-
 
 export type NewAppointmentType = {
   title: string;
@@ -145,6 +146,23 @@ export type CaseDefendantType = {
   lastName: string;
   identity: string;
 };
+const cf = {
+  title: "string",
+  description: "string",
+  caseType: 0,
+  status: 0,
+  lawyer: 0,
+  dateFiled: "string",
+};
+
+export type NewCaseFilingType = {
+  title: string;
+  description: string;
+  caseType: number;
+  status: number;
+  lawyer: number;
+  dateFiled: string;
+};
 
 export type caseFilingType = {
   id: number;
@@ -154,8 +172,7 @@ export type caseFilingType = {
   caseId: string;
   caseType: CaseType;
   status: CaseStatusType;
-  lawyers: LawyerType[];
-  defendants: CaseDefendantType[];
+  lawyer: LawyerType;
   plaintiff: UserType;
 };
 

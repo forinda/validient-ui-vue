@@ -25,11 +25,7 @@ const sidebarLinks = {
       path: "adminAppointments",
       title: "Appointments",
     },
-    {
-      icon: "fa fa-user",
-      path: "adminClients",
-      title: "Clients",
-    },
+   
     {
       icon: "fa fa-user",
       path: "adminLawyers",
@@ -39,6 +35,10 @@ const sidebarLinks = {
       icon: "fa fa-users",
       path: "adminUsers",
       title: "Users",
+    },{
+      icon: "fa fa-gavel",
+      path: "adminCases",
+      title: "Cases",
     },
     {
       icon: "fa fa-user-shield",

@@ -87,6 +87,13 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:Lawyers */ import(
           "@/components/admin/AdminLawyers.vue"
         ),
+    },{
+      path: "lawyers/new",
+      name: "adminNewLawyer",
+      component: () =>
+        /**webpackChunkName:Lawyers */ import(
+          "@/components/admin/AdminNewLawyer.vue"
+        ),
     },
     {
       path: "clients",
@@ -102,6 +109,13 @@ const adminRoutes: RouteRecordRaw = {
       component: () =>
         /**webpackChunkName:Cases */ import(
           "@/components/admin/AdminCases.vue"
+        ),
+    },{
+      path: "cases/new",
+      name: "newAdminCase",
+      component: () =>
+        /**webpackChunkName:newAdminCaseFiling */ import(
+          "@/components/admin/AdminNewCaseFiling.vue"
         ),
     },
     {

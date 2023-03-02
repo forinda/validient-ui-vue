@@ -1,9 +1,9 @@
 <template>
    <div class="flex flex-col ">
-      <div class="shadow-md fixed w-60">
+      <div class="shadow-md fixed w-72">
         <admin-sidebar />
       </div>
-      <div class="ml-60">
+      <div class="ml-72">
       <admin-header></admin-header>
       <div class="min-h-screen">
         <router-view></router-view>

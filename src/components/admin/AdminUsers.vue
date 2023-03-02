@@ -44,7 +44,7 @@ onMounted(() => {
 });
 // pagination details
 const currentPage = ref(1);
-const pageSize = 5;
+const pageSize = 10;
 
 type userStatsKeys =
   | "users"
@@ -187,7 +187,7 @@ const createUserModalOpen = computed(() => {
     <!-- Quick actions -->
     <div class="rounded-md border-b p-4 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold uppercase">Quick actions</h1>
+        <h1 class="text-2xl font-bold uppercase">Users</h1>
       </div>
       <div>
         <router-link :to="{ name: 'adminNewUser' }" class="bg-color2 px-4 py-2 rounded-md text-color3"> Add new user </router-link>

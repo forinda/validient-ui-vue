@@ -35,7 +35,7 @@ onMounted(async () => {
 <template>
   <main>
     <div class="flex justify-between px-10 py-4 bg-white border-b">
-      <h1 class="text-2xl font-bold text-center">Quick action</h1>
+      <h1 class="text-2xl font-bold text-center">Case types</h1>
       <router-link
         :to="{ name: 'newCaseType' }"
         class="border bg-color2 text-color3 rounded-lg px-4 py-2"

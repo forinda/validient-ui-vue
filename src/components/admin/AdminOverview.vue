@@ -5,10 +5,10 @@ import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { ApexOptions } from "apexcharts";
 import axios from "axios";
-import { LawyerTypes, UserType, CaseType, CaseStatusType, ScheduleType, CaseDefendantType, caseFilingType, AppointmentType,UserRoleType } from "@/typings";
+import { UserType,LawyerType, CaseType, CaseStatusType, ScheduleType, CaseDefendantType, caseFilingType, AppointmentType,UserRoleType } from "@/typings";
 
 const { authStateAccessToken, authStateUser } = storeToRefs(useAuthStore())
-const lawyers = ref<Array<LawyerTypes>>([]);
+const lawyers = ref<Array<LawyerType>>([]);
 const users = ref<Array<UserType>>([]);
 const caseTypes = ref<Array<CaseType>>([]);
 const caseStatuses = ref<Array<CaseStatusType>>([]);
@@ -46,6 +46,8 @@ onMounted(async () => {
     try {
       const res = await publicAxios.get('/case-type', { headers })
       caseTypes.value = res.data
+      console.log('caseTypes', caseTypes.value);
+      
     } catch (error) {
       console.log(error);
     }
