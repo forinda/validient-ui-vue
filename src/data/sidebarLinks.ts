@@ -25,7 +25,7 @@ const sidebarLinks = {
       path: "adminAppointments",
       title: "Appointments",
     },
-   
+
     {
       icon: "fa fa-user",
       path: "adminLawyers",
@@ -35,7 +35,8 @@ const sidebarLinks = {
       icon: "fa fa-users",
       path: "adminUsers",
       title: "Users",
-    },{
+    },
+    {
       icon: "fa fa-gavel",
       path: "adminCases",
       title: "Cases",
@@ -65,7 +66,6 @@ const sidebarLinks = {
       path: "caseStatuses",
       title: "Case Statuses",
     },
-
   ],
   client: [
     {
@@ -77,7 +77,12 @@ const sidebarLinks = {
       icon: "fa fa-calendar",
       path: "clientSchedule",
       title: "Schedule",
-    }
+    },
+    {
+      icon: "fa fa-calendar",
+      path: "clientAppointments",
+      title: "Appointments",
+    },
   ],
   lawyer: [],
 } satisfies SidebarLinkMap<sideBarLink>;

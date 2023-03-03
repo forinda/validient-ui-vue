@@ -1,4 +1,4 @@
-export type GenderType = "MALE" | "FEMALE" | "OTHER";
+export type GenderType = "MALE" | "FEMALE" //| "OTHER";
 export type LawyerHourlyRateType = {
   id: number;
   label: string;

@@ -17,7 +17,6 @@ const date = ref(new Date());
         :min-date="new Date()"
       />
     </div>
-    <!-- <v-date-picker v-model="date" /> -->
   </div>
 </template>
 <style scoped></style>

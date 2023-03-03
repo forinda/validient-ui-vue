@@ -18,7 +18,7 @@ const formData = ref<
   avatar: "",
   email: "",
   firstName: "",
-  gender: "OTHER",
+  gender: "MALE",
   lastName: "",
   username: "",
   roles: [],

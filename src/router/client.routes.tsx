@@ -8,7 +8,7 @@ const clientRoutes: RouteRecordRaw = {
     authorities: ["USER"],
     title: "Client",
     requiresAuth: true,
-    roles: ['user'],
+    roles: ["user"],
   } satisfies RouteMetaType,
   component: () =>
     /**webpackChunkName:ClientLayout */ import("@/layouts/ClientLayout.vue"),
@@ -29,6 +29,9 @@ const clientRoutes: RouteRecordRaw = {
               "@/components/client/ClientOverview.vue"
             ),
         },
+        /**
+         * Client Cases
+         */
         {
           path: "cases",
           name: "ClientCases",
@@ -37,12 +40,34 @@ const clientRoutes: RouteRecordRaw = {
               "@/components/client/ClientCases.vue"
             ),
         },
+        /**
+         * Client Case Details
+         */
         {
           path: "schedule",
           name: "clientSchedule",
           component: () =>
             /**webpackChunkName:ClientSchedule */ import(
               "@/components/client/ClientSchedule.vue"
+            ),
+        },
+        /**
+         * Client Appointments
+         */
+        {
+          path: "clientAppointments",
+          name: "clientAppointments",
+          component: () =>
+            /**webpackChunkName:ClientAppointments */ import(
+              "@/components/client/ClientAppointments.vue"
+            ),
+        },
+        {
+          path: "clientAppointments/:id",
+          name: "clientAppointmentDetails",
+          component: () =>
+            /**webpackChunkName:ClientAppointmentDetails */ import(
+              "@/components/client/ClientAppointmentDetails.vue"
             ),
         },
       ],
