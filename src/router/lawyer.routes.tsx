@@ -18,7 +18,7 @@ const lawyerRoutes: RouteRecordRaw = {
   children: [
     {
       path: "",
-      name: "lawyerOverview",
+      name: "lawyer",
       component: () =>
         /**webpackChunkName:Overview */ import(
           "@/components/lawyer/LawyerOverview.vue"
