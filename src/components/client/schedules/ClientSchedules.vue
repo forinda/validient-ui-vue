@@ -32,7 +32,7 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="h-full flex flex-col gap-4 p-2">
+  <div v-if="userSchedules.length>0" class="h-full flex flex-col gap-4 p-2">
     <div class="shadow w-full p-4 flex gap-4 border">
       <div class="border w-full max-w-xs bg-white p-4 rounded flex items-center justify-between gap-4">
         <div class="text-center">
@@ -110,5 +110,17 @@ onMounted(async () => {
         </tr>
       </tbody>
     </table>
+  </div>
+  <div v-else class="h-full p-10 text-center flex justify-center flex-col gap-4">
+    <p class="text-center text-gray-500 font-bold text-3xl">No schedules found</p>
+    <div>
+      <p>
+        Get started by creating a new schedule <router-link :to="{ name: 'clientScheduleCreate' }"
+          class="text-blue-500 hover:text-blue-600">here</router-link>
+      </p>
+      <p>
+        Create personal schedules to keep track of your daily activities and tasks
+      </p>
+    </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref,onMounted,watch } from 'vue'
 
-const msg = ref('Hello World')
+const msg = ref('Edit schedule')
 
 </script>
 
