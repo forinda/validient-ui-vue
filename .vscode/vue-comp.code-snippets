@@ -1,0 +1,29 @@
+{
+	// Place your snippets for vue here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"Generate vue template with setup": {
+		"prefix": "v-tt",
+		"body": [
+			"<script setup lang=\"ts\">",
+			"import { ref,onMounted,watch } from 'vue'",
+			"",
+			"const msg = ref('Hello World')",
+			"",
+			"</script>",
+			"",
+			"<template>",
+			"	<div>",
+			"		<h1>${1:{{msg}}}</h1>",
+			"	</div>",
+			"</template>",
+			"",
+			"<style scoped >",
+			"	/* code */",
+			"</style>"
+		],
+		"description": "Vue boilerplate"
+	}
+}
