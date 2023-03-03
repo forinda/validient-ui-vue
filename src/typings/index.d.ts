@@ -156,7 +156,7 @@ export type NewCaseFilingType = {
   dateFiled: string;
 };
 
-export type caseFilingType = {
+export type CaseFilingType = {
   id: number;
   title: string;
   description: string;

@@ -32,7 +32,7 @@ const lawyerRoutes: RouteRecordRaw = {
       name: "lawyerCases",
       component: () =>
         /**webpackChunkName:Cases */ import(
-          "@/components/lawyer/LawyerCases.vue"
+          "@/components/lawyer/cases/LawyerCases.vue"
         ),
     },
     /**
@@ -43,9 +43,24 @@ const lawyerRoutes: RouteRecordRaw = {
       name: "lawyerSchedules",
       component: () =>
         /**webpackChunkName:Schedules */ import(
-          "@/components/lawyer/LawyerSchedules.vue"
+          "@/components/lawyer/schedules/LawyerSchedules.vue"
         ),
     },
+    {
+      path: "schedules/new",
+      name: "lawyerSchedulesNew",
+      component: () =>
+        /**webpackChunkName:SchedulesNew */ import("@/components/lawyer/schedules/LawyerSchedulesNew.vue"),
+    },
+    /**
+     * lawyer appointments
+     */
+    {
+      path: "appointments",
+      name: "lawyerAppointments",
+      component: () =>
+        /**webpackChunkName:SchedulesNew */ import("@/components/lawyer/appointments/LawyerAppointments.vue"),
+    }
 
   
   ],

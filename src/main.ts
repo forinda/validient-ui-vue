@@ -15,15 +15,13 @@ import useAuthStore from "@/store/useAuthStore";
 router.beforeEach((to, from, next) => {
   const store = useAuthStore();
   const { requiresAuth, authorities, roles, title } = to.meta as RouteMetaType;
-
+  type RoleType = "admin" | "user" | "lawyer";
   if (requiresAuth) {
     if (!store.authStateAuthenticated) {
       next({ name: "login" });
     } else if (authorities.length > 0) {
-      const userRole = filterUserRoles(store.authUserRoles!) as
-        | "admin"
-        | "user"
-        | "lawyer";
+      const userRole = filterUserRoles(store.authUserRoles!) as RoleType;
+
       const authMatch = roles.some((role) => {
         return role === userRole;
       });

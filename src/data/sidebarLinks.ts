@@ -84,7 +84,30 @@ const sidebarLinks = {
       title: "Appointments",
     },
   ],
-  lawyer: [],
+  lawyer: [
+    {
+      icon: "fa fa-dashboard",
+      path: "lawyer",
+      title: "Dashboard",
+
+    },
+    {
+      icon: "fa fa-calendar",
+      path: "lawyerCases",
+      title: "Cases",
+    },
+    {
+      icon: "fa fa-calendar",
+      path: "lawyerSchedules",
+      title: "Schedules",
+    },
+    {
+      icon: "fa fa-calendar",
+      path: "lawyerAppointments",
+      title: "Appointments",
+    },
+  
+  ],
 } satisfies SidebarLinkMap<sideBarLink>;
 
 export default sidebarLinks;
