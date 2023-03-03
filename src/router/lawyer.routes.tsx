@@ -3,7 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 
 const lawyerRoutes: RouteRecordRaw = {
   path: "/lawyer",
-  name: "LawyerWrapper",
+  name: "lawyerDashboard",
   meta: {
     authorities: ["LAWYER"],
     title: "lawyer",
@@ -11,40 +11,43 @@ const lawyerRoutes: RouteRecordRaw = {
     roles: ["lawyer"],
   } satisfies RouteMetaType,
   component: () =>
-    /**webpackChunkName:LawyerLayout*/ import("@/layouts/LawyerLayout.vue"),
+    /**webpackChunkName:Dashboard */ import(
+      "@/layouts/LawyerDashboardLayout.vue"
+    ),
+
   children: [
     {
       path: "",
-      name: "LawyerDashboardLayout",
+      name: "lawyerOverview",
       component: () =>
-        /**webpackChunkName:LawyerDashboardLayout*/ import(
-          "@/layouts/LawyerDashboardLayout.vue"
+        /**webpackChunkName:Overview */ import(
+          "@/components/lawyer/LawyerOverview.vue"
         ),
-      children: [
-        {
-          path: "",
-          name: "lawyer",
-          component: () =>
-            /**webpackChunkName:LawyerOverview*/ import(
-              "@/components/lawyer/LawyerOverview.vue"
-            ),
-        },
-        {
-          path: "cases",
-          name: "LawyerCases",
-          component: () =>
-            /**webpackChunkName:LawyerCases*/
-            "@/components/lawyer/LawyerCases.vue",
-        },
-        {
-          path: "schedules",
-          name: "LawyerSchedules",
-          component: () =>
-            /**webpackChunkName:LawyerCases*/
-            "@/components/lawyer/LawyerSchedules.vue",
-        },
-      ],
     },
+    /**
+     * Lawyer Cases
+     */
+    {
+      path: "cases",
+      name: "lawyerCases",
+      component: () =>
+        /**webpackChunkName:Cases */ import(
+          "@/components/lawyer/LawyerCases.vue"
+        ),
+    },
+    /**
+     * Lawyer schedules
+     */
+    {
+      path: "schedules",
+      name: "lawyerSchedules",
+      component: () =>
+        /**webpackChunkName:Schedules */ import(
+          "@/components/lawyer/LawyerSchedules.vue"
+        ),
+    },
+
+  
   ],
 };
 

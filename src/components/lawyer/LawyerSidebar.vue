@@ -11,13 +11,13 @@ const menuItems = ref<Array<MenuItem>>([
     {
         name: "LawyerCases",
         icon: "fa fa-dashboard",
-        route: "LawyerCases",
+        route: "lawyerCases",
         title: "Cases",
     },
     {
         name: "LawyerSchedules",
         icon: "fa fa-dashboard",
-        route: "LawyerSchedules",
+        route: "lawyerSchedules",
         title: "Schedules",
     },
 ]);
