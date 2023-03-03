@@ -1,0 +1,90 @@
+[
+  {
+    "id": 0,
+    "title": "string",
+    "description": "string",
+    "year": 0,
+    "month": 0,
+    "date": 0,
+    "startHour": 0,
+    "startMinute": 0,
+    "owner": {
+      "id": 0,
+      "email": "string",
+      "username": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "avatar": "string",
+      "gender": "OTHER",
+      "roles": [
+        {
+          "id": 0,
+          "name": "string",
+          "description": "string",
+          "isDefault": true
+        }
+      ],
+      "userSchedules": [
+        {
+          "id": 0,
+          "title": "string",
+          "description": "string",
+          "year": 0,
+          "month": 0,
+          "date": 0,
+          "startHour": 0,
+          "startMinute": 0
+        }
+      ],
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "string"
+        }
+      ],
+      "accountNonExpired": true,
+      "accountNonLocked": true,
+      "credentialsNonExpired": true
+    },
+    "members": [
+      {
+        "id": 0,
+        "email": "string",
+        "username": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "avatar": "string",
+        "gender": "OTHER",
+        "roles": [
+          {
+            "id": 0,
+            "name": "string",
+            "description": "string",
+            "isDefault": true
+          }
+        ],
+        "userSchedules": [
+          {
+            "id": 0,
+            "title": "string",
+            "description": "string",
+            "year": 0,
+            "month": 0,
+            "date": 0,
+            "startHour": 0,
+            "startMinute": 0
+          }
+        ],
+        "enabled": true,
+        "authorities": [
+          {
+            "authority": "string"
+          }
+        ],
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      }
+    ]
+  }
+]

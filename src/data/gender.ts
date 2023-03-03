@@ -10,12 +10,7 @@ const genderInfo = [
     id: "Female",
     value: "FEMALE",
     checked: false,
-  },
-  {
-    id: "Other",
-    value: "OTHER",
-    checked: true,
-  },
+  }
 ] satisfies Array<{
   value: GenderType;
   id: string;
