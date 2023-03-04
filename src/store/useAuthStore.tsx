@@ -86,6 +86,7 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async loginUser(user: SignInFormPropType) {
+      this.resetErrors()
       try {
         const res = await publicAxios.post("/auth/login", user);
         // const { data } = res;

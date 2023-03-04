@@ -75,7 +75,7 @@ const sidebarLinks = {
     },
     {
       icon: "fa fa-calendar",
-      path: "clientSchedule",
+      path: "clientSchedules",
       title: "Schedule",
     },
     {

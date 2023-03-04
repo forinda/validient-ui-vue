@@ -5,6 +5,19 @@ export type LawyerHourlyRateType = {
   rate: number;
   maxYears: number;
 };
+export type DateStatusType =
+  | "today"
+  | "past"
+  | "tomorrow"
+  | "upcoming"
+  | "yesterday"
+  | "this week"
+  | "next week"
+  | "this month"
+  | "next month"
+  | "this year"
+  | "next year"
+  | "unknown"
 export type NewLawyerType = {
   verifiedYear: number;
   hourlyRate: number;
@@ -130,7 +143,16 @@ export type AppointmentType = {
   owner: number;
   members: number[];
 };
-export type ScheduleType = {
+export type NewScheduleType = {
+  title: string;
+  description: string;
+  year: number;
+  month: number;
+  date: number;
+  startHour: number;
+  startMinute: number;
+};
+  export type ScheduleType = {
   id: number;
   title: string;
   description: string;
@@ -139,6 +161,7 @@ export type ScheduleType = {
   date: number;
   startHour: number;
   startMinute: number;
+  user: UserType;
 };
 export type CaseDefendantType = {
   id: number;

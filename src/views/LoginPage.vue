@@ -26,6 +26,8 @@ const handleLogin = async () => {
   if (valid$.value.$error) {
     return;
   }
+  console.log(store.loginErrors);
+  
   await store.loginUser(formData.value)
 }
 </script>
@@ -44,7 +46,7 @@ const handleLogin = async () => {
             <div>
         <p v-if="Array.isArray(store.loginErrors) && store.loginErrors.length > 0 ? true : false"
           @click.pre="store.resetErrors" class="border p-2 rounded bg-red-200">
-          <span v-for="item in store.registrationErrors??[]" :key="item" class="text-red-500 text-sm">
+          <span v-for="item in store.loginErrors??[]" :key="item" class="text-red-500 text-sm">
             {{ item }}
           </span>
         </p>

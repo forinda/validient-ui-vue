@@ -2,7 +2,7 @@
 import { publicAxios } from "@/api";
 import useAuthStore from "@/store/useAuthStore";
 import { storeToRefs } from "pinia";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { ApexOptions } from "apexcharts";
 import axios from "axios";
 import {
@@ -12,7 +12,7 @@ import {
   CaseStatusType,
   ScheduleType,
   CaseDefendantType,
-  caseFilingType,
+  CaseFilingType,
   AppointmentType,
   UserRoleType,
 } from "@/typings";
@@ -20,12 +20,39 @@ import { getDateStatus } from "@/utils/dateBefoeAfterUtil";
 import formatScheduleTime from "@/utils/formatScheduleTime";
 import moment from "moment";
 
+type clientStatsKeys =
+  | "totalCases"
+  | "totalSchedules"
+  | "totalAppointments"
+  | "totalFilings"
+  | "todaySchedules"
+  | "todayAppointments"
+  | "createdAppointments"
+  | "memberAppointments"
+  | "tomorrowSchedules";
+
+type ClientStatsType = {
+  [key in clientStatsKeys]: {
+    count: number;
+    percentage: number;
+    title: string;
+    color: string;
+    icon: string;
+  };
+} & {
+  [key: string]: {
+    count: number;
+    percentage: number;
+    title: string;
+    color: string;
+    icon: string;
+  };
+};
+
 const { authStateAccessToken, authStateUser } = storeToRefs(useAuthStore());
 const schedules = ref<Array<ScheduleType>>([]);
-const caseDefendants = ref<Array<CaseDefendantType>>([]);
-const caseFilings = ref<Array<caseFilingType>>([]);
+const caseFilings = ref<Array<CaseFilingType>>([]);
 const appointments = ref<Array<AppointmentType>>([]);
-const roles = ref<Array<UserRoleType>>([]);
 
 onMounted(async () => {
   const headers = {
@@ -53,23 +80,15 @@ onMounted(async () => {
     try {
       const res = await publicAxios.get("/appointments", { headers });
       console.log("appointments", res.data);
-      appointments.value = res.data.filter(
-        (appointment: AppointmentType) =>
-          appointment.owner === authStateUser.value?.id ||
-          appointment.members.some((user) => {
-            const u = user as unknown as UserType;
-            return u.id === authStateUser.value?.id;
-          })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchRoles = async () => {
-    try {
-      const res = await publicAxios.get("/roles", { headers });
-      console.log("roles", res.data);
-      roles.value = res.data;
+      appointments.value = res.data
+      // .filter(
+      //   (appointment: AppointmentType) =>
+      //     appointment.owner === authStateUser.value?.id ||
+      //     appointment.members.some((user) => {
+      //       const u = user as unknown as UserType;
+      //       return u.id === authStateUser.value?.id;
+      //     })
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -79,182 +98,140 @@ onMounted(async () => {
     fetchSchedules(),
     fetchCaseFilings(),
     fetchAppointments(),
-    fetchRoles(),
   ]);
+});
+
+const clientStats = computed((): ClientStatsType => {
+  const totalCases = caseFilings.value.length;
+  const totalSchedules = schedules.value.length;
+  const totalAppointments = appointments.value.length;
+  const createdAppointments = appointments.value.filter(
+    (appointment) =>
+      (appointment.owner as unknown as UserType).id === authStateUser.value?.id
+  );
+  const memberAppointments = appointments.value.filter((appointment) =>
+    appointment.members.some((user) => {
+      const u = user as unknown as UserType;
+      return u.id === authStateUser.value?.id;
+    })
+  );
+  const tomorrowSchedules = schedules.value.filter(
+    (schedule) =>
+      getDateStatus(schedule as any) === "tomorrow" &&
+      schedule.user.id === authStateUser.value?.id
+  );
+  const todaySchedules = schedules.value.filter(
+    (schedule) =>
+      getDateStatus(schedule as any) === "today" &&
+      schedule.user.id === authStateUser.value?.id
+  );
+  const personalSchedules = schedules.value.filter(
+    (schedule) => schedule.user.id === authStateUser.value?.id
+  )
+
+  const clientcases = caseFilings.value.filter(
+    (caseFiling) => caseFiling.plaintiff.id === authStateUser.value?.id
+
+  );
+
+  return {
+    totalCases: {
+      count: totalCases,
+      percentage: 0,
+      title: "Total Cases Filed",
+      color: "bg-blue-500",
+      icon: "fas fa-file-alt",
+    },
+    totalSchedules: {
+      count: totalSchedules,
+      percentage: 0,
+      title: "Total Schedules",
+      color: "bg-green-500",
+      icon: "fas fa-calendar-alt",
+    },
+    totalAppointments: {
+      count: memberAppointments.length,
+      percentage: 0,
+      title: "Total Appointments",
+      color: "bg-yellow-500",
+      icon: "fas fa-calendar-check",
+    },
+    createdAppointments: {
+      count: createdAppointments.length,
+      percentage: (createdAppointments.length / totalAppointments) * 100,
+      title: "Created Appointments",
+      color: "bg-yellow-500",
+      icon: "fas fa-calendar-check",
+    },
+    memberAppointments: {
+      count: memberAppointments.length,
+      percentage: memberAppointments.length ,
+      title: "Member Appointments",
+      color: "bg-yellow-500",
+      icon: "fas fa-calendar-check",
+    },
+    totalFilings: {
+      count: clientcases.length,
+      percentage: 0,
+      title: "Total Filings",
+      color: "bg-indigo-500",
+      icon: "fas fa-file",
+    },
+
+    todaySchedules: {
+      count: todaySchedules.length,
+      percentage: 0,
+      title: "Today Schedules",
+      color: "bg-green-500",
+      icon: "fas fa-calendar-alt",
+    },
+    todayAppointments: {
+      count: memberAppointments.filter(
+        (appointment) => getDateStatus(appointment as any) === "today"
+      ).length,
+      percentage: 0,
+      title: "Today Appointments",
+      color: "bg-yellow-500",
+      icon: "fas fa-calendar-check",
+    },
+    tomorrowSchedules: {
+      count: tomorrowSchedules.length,
+      percentage: 0,
+      title: "Tomorrow Schedules",
+      color: "bg-green-500",
+      icon: "fas fa-calendar-alt",
+    },
+  };
 });
 </script>
 <template>
   <main class="flex flex-col gap-4 p-4 font-rubik bg-neutral-100 h-full">
-    <div class="gap-4 w-full">
-      <!-- <div class="h-80 w-80 bg-white rounded border flex flex-col p-4 justify-between shadow">
-          <div class="py-2">
-            <h1 class="text-center">{{ authStateUser?.firstName }} {{ authStateUser?.lastName }}</h1>
-            <p class="text-center">{{ authStateUser?.email }}</p>
-          </div>
-          <div class="h-full flex justify-center items-center">
-            <img :src="authStateUser?.avatar" alt="" class="h-32 w-32 rounded-full">
-          </div>
-          <div class="">
-            <h1 class="text-center font-bold ">Roles</h1>
-            <ul class="flex items-center justify-center gap-2">
-              <li v-for="role in authStateUser?.roles" :key="role.id"
-                class=" px-2 text-sm rounded-full bg-color2 text-color3">
-                {{ role.name }}
-              </li>
-            </ul>
-          </div>
-        </div> -->
-      <!-- Stats grid -->
-      <div class="grid grid-cols-5 grid-rows-2 w-full gap-4">
-        <!-- Grid item1 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ lawyers.length }}</h1>
-              <p>Lawyers</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <!-- Grid 2 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ users.length }}</h1>
-              <p>Users</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <!-- Grid 3 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ caseTypes.length }}</h1>
-              <p>Case types</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <!-- Grid 4 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ caseStatuses.length }}</h1>
-              <p>Case statuses</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <!-- Grid 5 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ schedules.length }}</h1>
-              <p>Schedules</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 6 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ caseDefendants.length }}</h1>
-              <p>Case defendants</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <!-- Grid 7 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
+    <div class="bg-white w-full border">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-2 w-full gap-4 bg-white p-4 mx-4"
+      >
+        <div
+          v-for="key of Object.keys(clientStats)"
+          class="h-full flex flex-col p-4 justify-between border rounded-lg bg-color8"
+        >
           <div class="flex justify-between">
             <div class="flex flex-col gap-2">
               <h1 class="color-1 font-bold text-3xl">
-                {{ caseDefendants.length }}
+                {{ clientStats?.[key].count.toString().padStart(2, "0") }}
               </h1>
-              <p>Case files</p>
+              <p>{{ clientStats?.[key].title }}</p>
             </div>
             <div>
               <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
+                :icon="clientStats?.[key].icon"
+                class="text-color2 bg-color3 p-4 rounded-full h-8 w-8"
               ></fa>
             </div>
           </div>
           <div class="h-fit border-t">
-            <p>Available</p>
+            <p>{{ clientStats?.[key].percentage.toFixed(1) }}%</p>
           </div>
         </div>
-        <!-- Grid 8 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">
-                {{ appointments.length }}
-              </h1>
-              <p>Appointments</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 9 -->
-        <!-- <div class=" bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ roles.length }}</h1>
-              <p>Roles</p>
-            </div>
-            <div>
-              <fa icon="fa fa-user" class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div> -->
-        <div></div>
       </div>
     </div>
     <table

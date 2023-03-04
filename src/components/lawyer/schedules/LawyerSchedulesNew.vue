@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ScheduleType } from "@/typings";
+import { NewScheduleType } from "@/typings";
 import { ref, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/store/useAuthStore";
 import { publicAxios } from "@/api";
 
 const { authStateUser, authStateAccessToken } = storeToRefs(useAuthStore());
-const newSchedule = ref<Omit<ScheduleType, "id">>({
+const newSchedule = ref<NewScheduleType>({
     title: "",
     description: "",
     date: 0,

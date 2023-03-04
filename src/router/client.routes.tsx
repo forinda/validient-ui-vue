@@ -33,7 +33,7 @@ const clientRoutes: RouteRecordRaw = {
      */
     {
       path: "schedule",
-      name: "clientSchedule",
+      name: "clientSchedules",
       component: () =>
         /**webpackChunkName:ClientSchedule */ import(
           "@/components/client/schedules/ClientSchedules.vue"
@@ -88,6 +88,36 @@ const clientRoutes: RouteRecordRaw = {
       component: () =>
         /**webpackChunkName:ClientAppointmentDetails */ import(
           "@/components/client/appointments/ClientAppointmentDetails.vue"
+        ),
+    },
+    /**
+     * Client Profile
+     */
+    {
+      path: "profile",
+      name: "clientProfile",
+      component: () =>
+        /**webpackChunkName:ClientProfile */ import(
+          "@/components/client/profile/ClientViewProfile.vue"
+        ),
+    },
+    {
+      path: "profile/edit",
+      name: "clientProfileEdit",
+      component: () =>
+        /**webpackChunkName:ClientProfileEdit */ import(
+          "@/components/client/profile/ClientEditProfile.vue"
+        ),
+    },
+    /**
+     * Client Settings
+     * */
+    {
+      path: "calendar",
+      name: "clientCalendar",
+      component: () =>
+        /**webpackChunkName:ClientCalendar */ import(
+          "@/components/client/calendar/ClientCalendar.vue"
         ),
     },
   ],
