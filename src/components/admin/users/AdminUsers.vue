@@ -3,15 +3,11 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/store/useAuthStore";
 import {
   UserType,
-  GenderType,
   UserRoleType,
-  UserAuthorityType,
-  SignUpFormPropType,
 } from "@/typings";
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { publicAxios } from "@/api";
 import filterUserRoles from "@/utils/roleFilter";
-import genderInfo from "@/data/gender";
 const { authStateAccessToken } = storeToRefs(useAuthStore());
 
 const tableBody = ref<Array<UserType>>([]);
@@ -45,6 +41,14 @@ onMounted(() => {
 // pagination details
 const currentPage = ref(1);
 const pageSize = 10;
+const pageCount = computed(() => {
+  return Math.ceil(tableBody.value.length / pageSize);
+});
+const paginatedItems = computed(() => {
+  const startIndex = (currentPage.value - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  return tableBody.value.slice(startIndex, endIndex);
+});
 
 type userStatsKeys =
   | "users"
@@ -71,14 +75,7 @@ type userStatsType = {
   };
 };
 
-const pageCount = computed(() => {
-  return Math.ceil(tableBody.value.length / pageSize);
-});
-const paginatedItems = computed(() => {
-  const startIndex = (currentPage.value - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  return tableBody.value.slice(startIndex, endIndex);
-});
+
 const computedUserStats = computed((): userStatsType => {
   const users = tableBody.value.filter(
     (user) =>
@@ -256,7 +253,7 @@ const createUserModalOpen = computed(() => {
         </thead>
         <tbody>
           <tr
-            v-for="user in paginatedItems"
+            v-for="(user,index) in paginatedItems"
             :key="user.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
@@ -276,7 +273,7 @@ const createUserModalOpen = computed(() => {
               </div>
             </td>
             <td>
-              {{ user.id }}
+              {{ index+1 }}
             </td>
             <td>
               <div class="flex justify-center items-centers">

@@ -11,6 +11,8 @@ import filterUserRoles from "./utils/roleFilter";
 import piniaPlugin from "@/plugins/piniaPlugin";
 import router from "@/router";
 import useAuthStore from "@/store/useAuthStore";
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 router.beforeEach((to, from, next) => {
   const store = useAuthStore();
@@ -43,6 +45,7 @@ createApp(App)
   .component("fa", Fa)
   .use(VCalendar, {})
   .use(VueApexCharts)
+  .use(LoadingPlugin)
   .use(router)
   .component("multi-select", Multiselect)
   .use(piniaPlugin)

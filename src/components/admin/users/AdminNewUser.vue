@@ -86,7 +86,7 @@ onMounted(async () => {
   } catch (error:any) {
     const { data } = error.response;
     if(data.errorMessage){
-      alert(data.errorMessage);
+      console.log(data.errorMessage);
     }
   }
 });

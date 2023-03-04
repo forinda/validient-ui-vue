@@ -117,7 +117,22 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:newAdminCaseFiling */ import(
           "@/components/admin/cases/AdminNewCaseFiling.vue"
         ),
-    },
+    },{
+      path: "cases/:caseId/edit",
+      name: "editAdminCase",
+      component: () =>
+        /**webpackChunkName:editAdminCaseFiling */ import(
+          "@/components/admin/cases/AdminEditCaseFiling.vue"
+        ),
+    },{
+      path: "cases/:caseId",
+      name: "adminCaseDetails",
+      component: () =>
+        /**webpackChunkName:adminCaseDetails */ import(
+          "@/components/admin/cases/AdminCaseDetails.vue"
+        ),
+    }
+    ,
     {
       path: "appointments",
       name: "adminAppointments",
@@ -163,7 +178,7 @@ const adminRoutes: RouteRecordRaw = {
       path: "casefiling/new",
       component: () =>
         /**webpackChunkName:NewCaseFiling */ import(
-          "@/components/admin/cases/NewCaseFiling.vue"
+          "@/components/admin/cases/AdminNewCaseFiling.vue"
         ),
     },
     {

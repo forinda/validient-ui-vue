@@ -31,12 +31,13 @@ const lawyerHourlyRate = ref<LawyerHourlyRateType[]>(lawyerRates());
 
 const selectableUsers = computed(() => {
   if (!userList.value.length) return [];
-  if (!existingLawyers.value.length) return [];
+  // if (!existingLawyers.value.length) return [];
   const eligibleUsers = userList.value.filter(
     (user) =>
-      filterUserRole(user.roles.map((r) => r.name.toLowerCase())) ===
-      GlobalUserType.LAWYER
+      filterUserRole(user.roles.map((r) => r.name.toLowerCase())) as GlobalUserType ==='lawyer'
+      
   );
+console.log();
 
   const confirmedLawyers = eligibleUsers.filter((user) => {
     const found = existingLawyers.value.find(
@@ -117,7 +118,7 @@ const handleSubmit = async (e: Event) => {
     console.log(data);
 
     if (data.errorMessage) {
-      alert(data.errorMessage);
+      console.log(data.errorMessage);
     }
     console.log(error);
   }
@@ -137,7 +138,7 @@ onMounted(async () => {
     } catch (error: any) {
       const { data } = error.response;
       if (data.errorMessage) {
-        alert(data.errorMessage);
+        console.log(data.errorMessage);
       }
     }
   };
@@ -149,7 +150,7 @@ onMounted(async () => {
     } catch (error: any) {
       const { data } = error.response;
       if (data.errorMessage) {
-        alert(data.errorMessage);
+        console.log(data.errorMessage);
       }
     }
   };
@@ -160,7 +161,7 @@ onMounted(async () => {
     } catch (error: any) {
       const { data } = error.response;
       if (data.errorMessage) {
-        alert(data.errorMessage);
+        console.log(data.errorMessage);
       }
     }
   };
@@ -255,7 +256,7 @@ watch(
             </div>
             <p v-if="selectableUsers.length < 1">
               <span>
-                No user available for this year of graduation. Please add a new
+                No user available. Please add a new
                 user
                 <router-link
                   :to="{ name: 'adminNewUser' }"

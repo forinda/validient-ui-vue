@@ -15,11 +15,7 @@ const sidebarLinks = {
       path: "admin",
       title: "Dashboard",
     },
-    {
-      icon: "fa fa-calendar",
-      path: "adminCalendar",
-      title: "Calendar",
-    },
+
     {
       icon: "fa fa-calendar",
       path: "adminAppointments",
@@ -45,11 +41,6 @@ const sidebarLinks = {
       icon: "fa fa-user-shield",
       path: "adminRoles",
       title: "Roles",
-    },
-    {
-      icon: "fa fa-lock-open",
-      path: "adminPermissions",
-      title: "Permissions",
     },
     {
       icon: "fa fa-user",

@@ -1,10 +1,11 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import {
   NewCaseFilingType,
   CaseType,
   CaseStatusType,
   LawyerType,
   UserType,
+  CaseFilingType,
 } from "@/typings";
 import { computed, onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
@@ -13,7 +14,16 @@ import { publicAxios } from "@/api";
 import { useRouter } from "vue-router";
 const { authStateAccessToken } = storeToRefs(useAuthStore());
 const router = useRouter();
+
 const newCaseFile = ref<NewCaseFilingType>({
+  dateFiled: "",
+  title: "",
+  description: "",
+  lawyer: 0,
+  status: 0,
+  caseType: 0,
+} );
+const updateCaseFile = ref<NewCaseFilingType>({
   dateFiled: new Date().toISOString(),
   title: "",
   description: "",
@@ -50,7 +60,7 @@ const handleSubmit = async (e: Event) => {
   if (target.checkValidity()) {
     try {
       const response = await publicAxios.post(
-        `/cases/${possiblePlaintiff.value?.id}/create`,
+        `/cases/${possiblePlaintiff.value?.caseId}/update`,
         newCaseFile.value,
         config
       );
@@ -101,16 +111,36 @@ onMounted(async () => {
       console.log(error);
     }
   };
+  const fetchCaseById = async () => {
+    try {
+      const response = await publicAxios.get(
+        `/cases/${router.currentRoute.value.params.caseId}`,
+        config
+      );
+      newCaseFile.value = response.data;
+      updateCaseFile.value = {
+        dateFiled: response.data.dateFiled,
+        title: response.data.title,
+        description: response.data.description,
+        lawyer: response.data.lawyer.id,
+        status: response.data.status.id,
+        caseType: response.data.caseType.id,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return Promise.all([
     fetchLawyers(),
     fetchCaseTypes(),
     fetchCaseStatuses(),
     fetchUsers(),
+    fetchCaseById(),
   ]);
 });
 const possibleLawyers = computed(() => {
   const possible = lawyers.value
-    .filter((l) => l.caseType.id === newCaseFile.value.caseType)
+    .filter((l) => l.caseType.id === newCaseFile.value.caseType.id)
     .map((lawyer) => {
       return {
         id: lawyer.id,
@@ -118,21 +148,21 @@ const possibleLawyers = computed(() => {
       };
     });
   if (possible.length > 0) {
-    newCaseFile.value.lawyer = possible[0].id;
+    newCaseFile.value.lawyer.id = possible[0].id;
   }
   return possible;
 });
 const possibleCaseTypes = computed(() => {
   const possible = caseTypes.value.slice();
   if (possible.length > 0) {
-    newCaseFile.value.caseType = possible[0].id;
+    updateCaseFile.value.caseType = possible[0].id;
   }
   return possible;
 });
 const possibleCaseStatuses = computed(() => {
   const possible = caseStatuses.value.slice();
   if (possible.length > 0) {
-    newCaseFile.value.status = possible[0].id;
+    updateCaseFile.value.status = possible[0].id;
   }
   return possible;
 });
@@ -152,17 +182,19 @@ const lawyer = ref<number>(0);
 const handleLawyerChange = (e: Event) => {
   const target = e.target as HTMLSelectElement;
   lawyer.value = parseInt(target.value);
-  newCaseFile.value.lawyer = lawyer.value;
+  newCaseFile.value.lawyer.id = lawyer.value;
 };
 watch(lawyer, (update) => {
-  newCaseFile.value.lawyer = update;
+  newCaseFile.value.lawyer.id = update;
 });
 </script>
 <template>
   <div class="w-full h-full flex justify-center py-10">
     <form @submit.prevent="handleSubmit" class="form-component border">
       <div>
-        <h1 class="text-2xl font-bold text-center">New Case filing</h1>
+        <h1 class="text-2xl font-bold text-center">
+          Update {{ newCaseFile.title }}
+        </h1>
       </div>
       <div class="input-wrapper">
         <label for="name">Title</label>
@@ -170,7 +202,7 @@ watch(lawyer, (update) => {
           required
           type="text"
           id="name"
-          v-model="newCaseFile.title"
+          v-model="updateCaseFile.title"
           class="input-field"
           placeholder="Case title."
         />
@@ -182,7 +214,7 @@ watch(lawyer, (update) => {
           required
           type="text"
           id="description"
-          v-model="newCaseFile.description"
+          v-model="updateCaseFile.description"
           class="input-field"
           placeholder="Description"
         ></textarea>
@@ -190,7 +222,9 @@ watch(lawyer, (update) => {
       <!-- Plaintiff -->
       <p v-if="!foundPossiblePlaintiff">
         <span>No users found please add as users</span>
-        <router-link :to="{name:'newUser'}" class="no-member-link">here</router-link>
+        <router-link :to="{ name: 'newUser' }" class="no-member-link"
+          >here</router-link
+        >
       </p>
       <div v-if="foundPossiblePlaintiff" class="input-wrapper">
         <label for="name">Select plaintiff</label>
@@ -203,7 +237,11 @@ watch(lawyer, (update) => {
           placeholder="Case plaintiff"
         >
           <option value="" disabled>Select category</option>
-          <option v-for="user of users" :value="user.id">
+          <option
+            v-for="user of users"
+            :value="user.id"
+            :selected="updateCaseFile.plaintiff === user.id"
+          >
             {{ user.firstName }} {{ user.lastName }}
           </option>
         </select>
@@ -211,7 +249,9 @@ watch(lawyer, (update) => {
       <!-- Case type -->
       <p v-if="!foundPossibleCaseTypes" class="not-found-error">
         <span>No case types found please create</span>
-        <router-link :to="{name:'newCaseType'}" class="no-member-link">here</router-link>
+        <router-link :to="{ name: 'newCaseType' }" class="no-member-link"
+          >here</router-link
+        >
       </p>
       <div v-if="foundPossibleCaseTypes" class="input-wrapper">
         <label for="name">Select category</label>
@@ -219,12 +259,15 @@ watch(lawyer, (update) => {
           required
           type="text"
           id="name"
-          v-model="newCaseFile.caseType"
+          v-model="updateCaseFile.caseType"
           class="input-field"
           placeholder="Case title."
         >
           <option value="" disabled>Select category</option>
-          <option v-for="caseType of caseTypes" :value="caseType.id">
+          <option
+            v-for="caseType of caseTypes"
+            :selected="caseType.id === updateCaseFile.caseType"
+          >
             {{ caseType.name }}
           </option>
         </select>
@@ -232,8 +275,9 @@ watch(lawyer, (update) => {
       <!-- Status -->
       <p v-if="!foundPossibleCaseStatuses" class="not-found-error">
         <span>No case statuses found please create</span>
-        <router-link :to="{name:'newCaseStatus'}" class="no-member-link">here</router-link>
-
+        <router-link :to="{ name: 'newCaseStatus' }" class="no-member-link"
+          >here</router-link
+        >
       </p>
       <div
         v-if="caseStatuses.length > 0 && foundPossibleCaseStatuses"
@@ -257,8 +301,9 @@ watch(lawyer, (update) => {
       <!-- Case lawyer -->
       <p v-if="!foundPossibleLawyers" class="not-found-error">
         <span>No lawyers found please add</span>
-        <router-link :to="{name:'adminNewLawyer'}" class="no-member-link">here</router-link>
-
+        <router-link :to="{ name: 'adminNewLawyer' }" class="no-member-link"
+          >here</router-link
+        >
       </p>
       <div v-if="foundPossibleLawyers" class="input-wrapper">
         <label for="name">Select lawyer</label>
@@ -270,9 +315,13 @@ watch(lawyer, (update) => {
           class="input-field"
           placeholder="Case title."
         >
-          <option value="0" disabled>Select case lawyer</option>
+          <option value="0" disabled>Update lawyer</option>
           <option value="invalid">Invalid</option>
-          <option v-for="lawyer of possibleLawyers" :value="lawyer.id">
+          <option
+            v-for="lawyer of possibleLawyers"
+            :value="lawyer.id"
+            :selected="newCaseFile.lawyer.id === lawyer.id"
+          >
             {{ lawyer.name }}
           </option>
         </select>
@@ -282,7 +331,7 @@ watch(lawyer, (update) => {
         type="submit"
         class="submit-button"
       >
-        {{ !foundPossibleLawyers ? "No lawyers found" : "Submit" }}
+        {{ !foundPossibleLawyers ? "No lawyers found" : "Save new details" }}
       </button>
     </form>
   </div>
@@ -299,7 +348,7 @@ watch(lawyer, (update) => {
   @apply bg-blue-500 text-white rounded p-2;
 }
 .form-component {
-  @apply flex flex-col gap-4 w-full bg-white shadow-md rounded p-4 lg:p-10;
+  @apply flex flex-col gap-4 w-full  bg-white shadow-md rounded p-4 lg:p-10;
 }
 .not-found-error {
   @apply text-red-500;
@@ -307,4 +356,4 @@ watch(lawyer, (update) => {
 .no-member-link {
   @apply text-blue-500 hover:underline ml-2;
 }
-</style>
+</style> -->
