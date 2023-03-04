@@ -131,18 +131,6 @@ export type NewAppointmentType = {
   members: number[];
 };
 
-export type AppointmentType = {
-  id: number;
-  title: string;
-  description: string;
-  year: number;
-  month: number;
-  date: number;
-  startHour: number;
-  startMinute: number;
-  owner: number;
-  members: number[];
-};
 export type NewScheduleType = {
   title: string;
   description: string;
@@ -201,6 +189,6 @@ export type AppointmentType = {
   date: number;
   startHour: number;
   startMinute: number;
-  owner: number;
-  members: Array<number | UserType>;
+  owner: UserType;
+  members:  UserType[];
 };

@@ -121,7 +121,7 @@ onMounted(async () => {
         </thead>
         <tbody>
           <tr
-            v-for="lawyer in paginatedItems"
+            v-for="(lawyer,idx) in paginatedItems"
             :key="lawyer.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
@@ -141,7 +141,7 @@ onMounted(async () => {
               </div>
             </td>
             <td>
-              {{ lawyer.id }}
+              {{  idx+1 }}
             </td>
             <td>
               {{ lawyer.identification }}
@@ -175,6 +175,12 @@ onMounted(async () => {
               <div class="border w-fit px-2">
                 {{ lawyer.caseType.name }} law
               </div>
+            </td>
+            <td>
+              <router-link
+                :to="{ name: 'adminLawyerDetails', params: { lawyerId: lawyer.id,userId:lawyer.user.id } }"
+                class="text-blue-600 hover:text-blue-900"
+                >View</router-link>
             </td>
           </tr>
         </tbody>

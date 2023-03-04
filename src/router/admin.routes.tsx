@@ -80,6 +80,9 @@ const adminRoutes: RouteRecordRaw = {
           "@/components/admin/AdminCalendar.vue"
         ),
     },
+    /**
+     * Lawyers
+     */
     {
       path: "lawyers",
       name: "adminLawyers",
@@ -96,6 +99,18 @@ const adminRoutes: RouteRecordRaw = {
         ),
     },
     {
+      path: "lawyers/:lawyerId/user/:userId",
+      name: "adminLawyerDetails",
+      component: () =>
+        /**webpackChunkName:LawyerDetails */ import(
+          "@/components/admin/lawyers/AdminLawyerDetails.vue"
+        ),
+
+    },
+    /**
+     * Clients
+     */
+    {
       path: "clients",
       name: "adminClients",
       component: () =>
@@ -103,6 +118,9 @@ const adminRoutes: RouteRecordRaw = {
           "@/components/admin/AdminClients.vue"
         ),
     },
+    /**
+     * Cases
+     */
     {
       path: "cases",
       name: "adminCases",
@@ -132,6 +150,9 @@ const adminRoutes: RouteRecordRaw = {
           "@/components/admin/cases/AdminCaseDetails.vue"
         ),
     }
+    /**
+     * Appointments
+     */
     ,
     {
       path: "appointments",
@@ -140,6 +161,23 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:Appointments */ import(
           "@/components/admin/appointments/AdminAppointments.vue"
         ),
+    },
+    {
+      path: "appointments/new",
+      name: "adminNewAppointment",
+      component: () =>
+        /**webpackChunkName:NewAppointment */ import(
+          "@/components/admin/appointments/AdminNewAppointment.vue" 
+        ),
+    },
+    {
+      path: "appointments/:appointmentId",
+      name: "adminAppointmentDetails",
+      component: () =>
+        /**webpackChunkName:AppointmentDetails */ import(
+          "@/components/admin/appointments/AdminAppointmentDetails.vue"
+        ),
+        
     },
     {
       name: "newCaseType",
@@ -181,12 +219,22 @@ const adminRoutes: RouteRecordRaw = {
           "@/components/admin/cases/AdminNewCaseFiling.vue"
         ),
     },
+    /**
+     * Users
+     */
     {
       name: "newUser",
       path: "user/new",
       component: () =>
         /**webpackChunkName:NewUser */ import("@/components/admin/NewUser.vue"),
     },
+    {
+      name: "adminUserDetails",
+      path: "user/:userId",
+      component: () =>
+        /**webpackChunkName:AdminUserDetails */ import(
+          "@/components/admin/users/AdminUserDetails.vue"
+        ),}
   ],
 };
 

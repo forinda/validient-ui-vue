@@ -308,7 +308,10 @@ const createUserModalOpen = computed(() => {
             </td>
             <td>
               <div>
-                <button @click="toggleCreateUserModal(true)">Edit</button>
+                <router-link
+                  :to="{ name: 'adminUserDetails', params: { userId: user.id } }"
+                  class="text-blue-600 hover:text-blue-900"
+                  >View details</router-link>
               </div>
             </td>
           </tr>
