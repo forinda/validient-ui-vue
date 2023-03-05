@@ -28,14 +28,18 @@ const caseFilings = ref<Array<CaseFilingType>>([]);
 const appointments = ref<Array<AppointmentType>>([]);
 const roles = ref<Array<UserRoleType>>([]);
 
-type LawyerStatsKeys = "cases" | "appointments" | "schedules"|'linkedAppointments'
+type LawyerStatsKeys =
+  | "cases"
+  | "appointments"
+  | "schedules"
+  | "linkedAppointments";
 
 type LawyerStats = {
   [key in LawyerStatsKeys]: {
     title: string;
     count: number;
   };
-};
+} & { [key: string]: any };
 
 onMounted(async () => {
   const headers = {
@@ -137,221 +141,65 @@ onMounted(async () => {
   ]);
 });
 
-const lawyerStats = computed((): LawyerStats =>{
-  const 
-  cases: {
-    title: "Cases to handle",
-    count: caseFilings.filter((caseFiling) => caseFiling.lawyerId === authStateUser.value?.id).length,
-  },
-  appointments: {
-    title: "Appointments",
-    count: 0,
-  },
-  schedules: {
-    title: "Schedules",
-    count: 0,
-  },
-  linkedAppointments: {
-    title: "Linked Appointments",
-    count: 0,
-  },}
-);
+const lawyerStats = computed((): LawyerStats => {
+  const stats = {
+    cases: {
+      title: "Cases to handle",
+      count: caseFilings.value.filter(
+        (caseFiling) =>
+          caseFiling.lawyer.id ===
+          lawyers.value.find(
+            (lawyer) => lawyer.user.id === authStateUser.value?.id
+          )?.id
+      ).length,
+    },
+    appointments: {
+      title: "Appointments",
+      count: 0,
+    },
+    schedules: {
+      title: "Schedules",
+      count: 0,
+    },
+    linkedAppointments: {
+      title: "Linked Appointments",
+      count: 0,
+    },
+  } satisfies LawyerStats;
+
+  return stats;
+});
 </script>
 <template>
   <main class="flex flex-col gap-4 p-4 font-rubik bg-neutral-100 h-full">
-    <div class="gap-4 w-full">
-      <!-- <div class="h-80 w-80 bg-white rounded border flex flex-col p-4 justify-between shadow">
-          <div class="py-2">
-            <h1 class="text-center">{{ authStateUser?.firstName }} {{ authStateUser?.lastName }}</h1>
-            <p class="text-center">{{ authStateUser?.email }}</p>
-          </div>
-          <div class="h-full flex justify-center items-center">
-            <img :src="authStateUser?.avatar" alt="" class="h-32 w-32 rounded-full">
-          </div>
-          <div class="">
-            <h1 class="text-center font-bold ">Roles</h1>
-            <ul class="flex items-center justify-center gap-2">
-              <li v-for="role in authStateUser?.roles" :key="role.id"
-                class=" px-2 text-sm rounded-full bg-color2 text-color3">
-                {{ role.name }}
-              </li>
-            </ul>
-          </div>
-        </div> -->
-      <!-- Stats grid -->
-      <div class="grid grid-cols-5 grid-rows-2 w-full gap-4">
-        <!-- Grid item1 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ lawyers.length }}</h1>
-              <p>Lawyers</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 2 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ users.length }}</h1>
-              <p>Users</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 3 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ caseTypes.length }}</h1>
-              <p>Case types</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 4 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
+    <div class="bg-white w-full border">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-2 w-full gap-4 bg-white p-4 mx-4"
+      >
+        <div
+          v-for="key of Object.keys(lawyerStats)"
+          class="h-full flex flex-col p-4 justify-between border rounded-lg bg-color8"
+        >
           <div class="flex justify-between">
             <div class="flex flex-col gap-2">
               <h1 class="color-1 font-bold text-3xl">
-                {{ caseStatuses.length }}
+                {{ lawyerStats?.[key].count.toString().padStart(2, "0") }}
               </h1>
-              <p>Case statuses</p>
+              <p>{{ lawyerStats?.[key].title }}</p>
             </div>
             <div>
               <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
+                :icon="lawyerStats?.[key].icon"
+                class="text-color2 bg-color3 p-4 rounded-full h-8 w-8"
               ></fa>
             </div>
           </div>
           <div class="h-fit border-t">
-            <p>Available</p>
+            <p></p>
           </div>
         </div>
-        <!-- Grid 5 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ schedules.length }}</h1>
-              <p>Schedules</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 6 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">
-                {{ caseDefendants.length }}
-              </h1>
-              <p>Case defendants</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 7 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">
-                {{ caseDefendants.length }}
-              </h1>
-              <p>Case files</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 8 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">
-                {{ appointments.length }}
-              </h1>
-              <p>Appointments</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <!-- Grid 9 -->
-        <div class="bg-white h-full flex flex-col p-4 justify-between">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-2">
-              <h1 class="color-1 font-bold text-3xl">{{ roles.length }}</h1>
-              <p>Roles</p>
-            </div>
-            <div>
-              <fa
-                icon="fa fa-user"
-                class="text-color3 bg-color2 p-4 rounded-full h-8 w-8"
-              ></fa>
-            </div>
-          </div>
-          <div class="h-fit border-t">
-            <p>Available</p>
-          </div>
-        </div>
-        <div></div>
       </div>
     </div>
+    <div class="gap-4 w-full"></div>
   </main>
 </template>

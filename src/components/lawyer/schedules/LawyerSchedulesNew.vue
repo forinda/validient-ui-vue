@@ -38,7 +38,7 @@ const handleSubmit = async (e: Event) => {
         creationConfig
       );
       alert("Schedule created successfully");
-      data && await router.push({ name: "adminSchedules" });
+      data && await router.push({ name: "lawyerSchedules" });
     } catch (err) {
       console.log(err);
     }
