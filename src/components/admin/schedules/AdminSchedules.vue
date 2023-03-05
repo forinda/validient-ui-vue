@@ -181,7 +181,7 @@ const scheduleStats = computed((): ScheduleStatsType => {
       {{ scheduleCountsAvailable ? "Schedule Counts" : "No Schedules" }}
     </h1>
     <router-link
-      :to="{ name: 'lawyerSchedulesNew' }"
+      :to="{ name: 'adminNewSchedule' }"
       class="text-white hover:text-blue-600 border py-2 px-4 rounded bg-color2"
       >Create new schedule</router-link
     >
@@ -320,7 +320,7 @@ const scheduleStats = computed((): ScheduleStatsType => {
       <p>
         Get started by creating a new schedule
         <router-link
-          :to="{ name: 'lawyerSchedulesNew' }"
+          :to="{ name: 'adminNewSchedule' }"
           class="text-blue-500 hover:text-blue-600"
           >here</router-link
         >

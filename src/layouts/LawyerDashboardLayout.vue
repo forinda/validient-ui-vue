@@ -1,18 +1,15 @@
 <template>
-  <div class="">
-    <div class="h-24">
-      <lawyer-header />
-    </div>
-    <div class="grid grid-cols-[280px_1fr] ">
-     <div>
-      <lawyer-sidebar />
-     </div>
-     <div class="bg-slate-300">
-      <router-view></router-view>
-     </div>
-    </div>
+ <div class="flex flex-col ">
+      <div class="shadow-md fixed w-60">
+        <lawyer-sidebar />
+      </div>
+      <div class="ml-60 ">
+      <lawyer-header></lawyer-header>
+      <div class="min-h-screen">
+        <router-view></router-view>
+      </div>
+      </div>
   </div>
-
 </template>
 
 <script setup lang="ts">

@@ -21,7 +21,11 @@ const sidebarLinks = {
       path: "adminAppointments",
       title: "Appointments",
     },
-
+{
+      icon: "fa fa-calendar",
+      path: "adminSchedules",
+      title: "Schedules",
+},
     {
       icon: "fa fa-user",
       path: "adminLawyers",
@@ -97,6 +101,11 @@ const sidebarLinks = {
       path: "lawyerAppointments",
       title: "Appointments",
     },
+    {
+      icon: "fa fa-user",
+      path: "lawyerProfile",
+      title: "Profile",
+    }
   
   ],
 } satisfies SidebarLinkMap<sideBarLink>;

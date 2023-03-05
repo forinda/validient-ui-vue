@@ -60,7 +60,23 @@ const lawyerRoutes: RouteRecordRaw = {
       name: "lawyerAppointments",
       component: () =>
         /**webpackChunkName:SchedulesNew */ import("@/components/lawyer/appointments/LawyerAppointments.vue"),
-    }
+    },{
+      path:'appointments/new',
+      name:'lawyerAppointmentsNew',
+      component: () =>
+        /**webpackChunkName:SchedulesNew */ import("@/components/lawyer/appointments/LawyerAppointmentsNew.vue"),
+    },
+    /**
+     * Lawyer profile
+     */
+    {
+      path: "profile",
+      name: "lawyerProfile",
+      component: () =>
+        /**webpackChunkName:Profile */ import(
+          "@/components/lawyer/profile/LawyerProfile.vue"
+        ),
+    },
 
   
   ],

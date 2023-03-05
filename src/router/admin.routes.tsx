@@ -90,7 +90,8 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:Lawyers */ import(
           "@/components/admin/lawyers/AdminLawyers.vue"
         ),
-    },{
+    },
+    {
       path: "lawyers/new",
       name: "adminNewLawyer",
       component: () =>
@@ -105,7 +106,6 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:LawyerDetails */ import(
           "@/components/admin/lawyers/AdminLawyerDetails.vue"
         ),
-
     },
     /**
      * Clients
@@ -128,32 +128,34 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:Cases */ import(
           "@/components/admin/cases/AdminCases.vue"
         ),
-    },{
+    },
+    {
       path: "cases/new",
       name: "newAdminCase",
       component: () =>
         /**webpackChunkName:newAdminCaseFiling */ import(
           "@/components/admin/cases/AdminNewCaseFiling.vue"
         ),
-    },{
+    },
+    {
       path: "cases/:caseId/edit",
       name: "editAdminCase",
       component: () =>
         /**webpackChunkName:editAdminCaseFiling */ import(
           "@/components/admin/cases/AdminEditCaseFiling.vue"
         ),
-    },{
+    },
+    {
       path: "cases/:caseId",
       name: "adminCaseDetails",
       component: () =>
         /**webpackChunkName:adminCaseDetails */ import(
           "@/components/admin/cases/AdminCaseDetails.vue"
         ),
-    }
+    },
     /**
      * Appointments
      */
-    ,
     {
       path: "appointments",
       name: "adminAppointments",
@@ -167,7 +169,7 @@ const adminRoutes: RouteRecordRaw = {
       name: "adminNewAppointment",
       component: () =>
         /**webpackChunkName:NewAppointment */ import(
-          "@/components/admin/appointments/AdminNewAppointment.vue" 
+          "@/components/admin/appointments/AdminNewAppointment.vue"
         ),
     },
     {
@@ -177,7 +179,6 @@ const adminRoutes: RouteRecordRaw = {
         /**webpackChunkName:AppointmentDetails */ import(
           "@/components/admin/appointments/AdminAppointmentDetails.vue"
         ),
-        
     },
     {
       name: "newCaseType",
@@ -234,7 +235,28 @@ const adminRoutes: RouteRecordRaw = {
       component: () =>
         /**webpackChunkName:AdminUserDetails */ import(
           "@/components/admin/users/AdminUserDetails.vue"
-        ),}
+        ),
+    },
+    /**
+     * Schedules
+     */
+    {
+      name: "adminSchedules",
+      path: "schedules",
+      component: () =>
+        /**webpackChunkName:AdminSchedules */ import(
+          "@/components/admin/schedules/AdminSchedules.vue"
+        ),
+    },
+    {
+      name: "adminNewSchedule",
+      path: "schedules/new",
+      component: () =>
+        /**webpackChunkName:AdminNewSchedule */ import(
+          "@/components/admin/schedules/AdminNewSchedule.vue"
+        ),
+    
+    }
   ],
 };
 
