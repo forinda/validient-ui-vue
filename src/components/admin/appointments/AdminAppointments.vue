@@ -173,7 +173,7 @@ const totalPages = computed(() => {
     <!-- create new appointment button -->
     <div class="flex justify-end py-4 px-4">
       <router-link
-        :to="{ name: 'lawyerAppointmentsNew' }"
+        :to="{ name: 'adminNewAppointment' }"
         class="bg-color2 text-color3 border py-2 px-4 rounded"
       >
         Create new appointment
